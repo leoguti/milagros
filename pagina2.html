@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctica de Teclado - Página 2 - Milagros</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      font-size: 2.2em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #ffe;
+      font-size: 1.1em;
+      margin-bottom: 30px;
+    }
+
+    .seccion {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .seccion h2 {
+      color: #f5576c;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #f5576c;
+      padding-bottom: 8px;
+    }
+
+    .ejercicio {
+      background: #fff3f3;
+      border-left: 6px solid #f5576c;
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .ejercicio .numero {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #f5576c;
+    }
+
+    .ejercicio p {
+      font-size: 1.05em;
+      color: #333;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .texto-modelo {
+      background: #f8f8f8;
+      border: 2px dashed #f5576c;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 1.1em;
+      color: #555;
+      margin: 10px 0;
+      letter-spacing: 1px;
+    }
+
+    .caja-escritura {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2em;
+      border: 3px solid #f5576c;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-family: 'Comic Sans MS', cursive;
+      background: #fafafa;
+    }
+
+    .caja-escritura.correcto {
+      border-color: #4caf50;
+      background: #f1fff1;
+    }
+
+    .caja-escritura.incorrecto {
+      border-color: #f44336;
+      background: #fff1f1;
+    }
+
+    .resultado {
+      margin-top: 10px;
+      font-size: 1.1em;
+      font-weight: bold;
+      min-height: 28px;
+    }
+
+    .resultado.bien { color: #2e7d32; }
+    .resultado.mal { color: #c62828; }
+
+    .btn {
+      margin-top: 8px;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      font-family: 'Comic Sans MS', cursive;
+      border: none;
+      color: white;
+    }
+
+    .btn-verificar { background: #f5576c; }
+    .btn-verificar:hover { background: #d32f4a; }
+    .btn-limpiar { background: #9e9e9e; margin-left: 8px; }
+
+    /* Combinaciones de teclas */
+    .combo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .combo-card {
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      border: 2px solid #f5576c;
+    }
+
+    .combo-teclas {
+      font-family: monospace;
+      font-size: 1.3em;
+      font-weight: bold;
+      background: #2d2d2d;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-bottom: 8px;
+      border-bottom: 4px solid #000;
+    }
+
+    .combo-desc {
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    /* Navegación */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .btn-nav {
+      background: white;
+      color: #f5576c;
+      border: 3px solid white;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 1.1em;
+      cursor: pointer;
+      font-family: 'Comic Sans MS', cursive;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    .btn-nav:hover { transform: scale(1.05); }
+
+    .progreso {
+      text-align: center;
+      color: white;
+      font-size: 1em;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>⌨️ Practicá el Teclado</h1>
+  <p class="subtitulo">¡Página 2 de 3 — Seguís aprendiendo muy bien Milagros! 🌟🌟</p>
+  <p class="progreso">⬜⬜ Página 1 — ✅ Página 2 — ⬜ Página 3</p>
+
+  <!-- COMBINACIONES -->
+  <div class="seccion">
+    <h2>🔑 Combinaciones de teclas útiles</h2>
+    <div class="combo-grid">
+
+      <div class="combo-card">
+        <div class="combo-teclas">Ctrl + C</div>
+        <p class="combo-desc"><strong>Copiar</strong> — copia el texto que seleccionaste</p>
+      </div>
+
+      <div class="combo-card">
+        <div class="combo-teclas">Ctrl + V</div>
+        <p class="combo-desc"><strong>Pegar</strong> — pega lo que copiaste</p>
+      </div>
+
+      <div class="combo-card">
+        <div class="combo-teclas">Ctrl + A</div>
+        <p class="combo-desc"><strong>Seleccionar todo</strong> — marca todo el texto</p>
+      </div>
+
+      <div class="combo-card">
+        <div class="combo-teclas">Ctrl + Z</div>
+        <p class="combo-desc"><strong>Deshacer</strong> — vuelve atrás el último cambio</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EJERCICIOS -->
+  <div class="seccion">
+    <h2>✏️ Ejercicios — ¡Copiá el texto exacto!</h2>
+
+    <div class="ejercicio">
+      <span class="numero">Ejercicio 1 ⭐ — Mayúsculas y minúsculas</span>
+      <p>Copiá esta frase exactamente igual, con mayúsculas donde corresponde:</p>
+      <div class="texto-modelo">Mi nombre es Milagros.</div>
+      <input type="text" class="caja-escritura" id="ej1" placeholder="Escribí acá...">
+      <br>
+      <button class="btn btn-verificar" onclick="verificar('ej1', 'Mi nombre es Milagros.', 'res1')">Verificar</button>
+      <button class="btn btn-limpiar" onclick="limpiarEj('ej1','res1')">Limpiar</button>
+      <div class="resultado" id="res1"></div>
+    </div>
+
+    <div class="ejercicio">
+      <span class="numero">Ejercicio 2 ⭐⭐ — Números y letras</span>
+      <p>Escribí esta frase que tiene números:</p>
+      <div class="texto-modelo">Tengo 8 años y vivo en Duitama.</div>
+      <input type="text" class="caja-escritura" id="ej2" placeholder="Escribí acá...">
+      <br>
+      <button class="btn btn-verificar" onclick="verificar('ej2', 'Tengo 8 años y vivo en Duitama.', 'res2')">Verificar</button>
+      <button class="btn btn-limpiar" onclick="limpiarEj('ej2','res2')">Limpiar</button>
+      <div class="resultado" id="res2"></div>
+    </div>
+
+    <div class="ejercicio">
+      <span class="numero">Ejercicio 3 ⭐⭐⭐ — La arroba @</span>
+      <p>Escribí esta dirección de correo. Recordá: la @ se hace con <strong>Alt Gr + 2</strong>:</p>
+      <div class="texto-modelo">milagros@gmail.com</div>
+      <input type="text" class="caja-escritura" id="ej3" placeholder="Escribí el correo acá...">
+      <br>
+      <button class="btn btn-verificar" onclick="verificar('ej3', 'milagros@gmail.com', 'res3')">Verificar</button>
+      <button class="btn btn-limpiar" onclick="limpiarEj('ej3','res3')">Limpiar</button>
+      <div class="resultado" id="res3"></div>
+    </div>
+
+    <div class="ejercicio">
+      <span class="numero">Ejercicio 4 ⭐⭐⭐⭐ — Frase completa</span>
+      <p>Este es el más difícil. Copiá esta frase con todo: mayúsculas, coma, punto y números:</p>
+      <div class="texto-modelo">Hola, tengo 8 años y me llamo Milagros.</div>
+      <input type="text" class="caja-escritura" id="ej4" placeholder="Escribí acá...">
+      <br>
+      <button class="btn btn-verificar" onclick="verificar('ej4', 'Hola, tengo 8 años y me llamo Milagros.', 'res4')">Verificar</button>
+      <button class="btn btn-limpiar" onclick="limpiarEj('ej4','res4')">Limpiar</button>
+      <div class="resultado" id="res4"></div>
+    </div>
+
+  </div>
+
+  <!-- NAVEGACIÓN -->
+  <div class="nav">
+    <a href="index.html" class="btn-nav">← Volver a Página 1</a>
+    <a href="pagina3.html" class="btn-nav">Siguiente →</a>
+  </div>
+
+  <script>
+    function verificar(inputId, correcto, resId) {
+      const val = document.getElementById(inputId).value;
+      const res = document.getElementById(resId);
+      const input = document.getElementById(inputId);
+      if (val === correcto) {
+        res.textContent = '🎉 ¡Perfecto! ¡Lo escribiste exactamente igual!';
+        res.className = 'resultado bien';
+        input.className = 'caja-escritura correcto';
+      } else if (val.toLowerCase() === correcto.toLowerCase()) {
+        res.textContent = '😊 ¡Casi! Fijate en las mayúsculas y minúsculas.';
+        res.className = 'resultado mal';
+        input.className = 'caja-escritura incorrecto';
+      } else {
+        res.textContent = '🔁 Intentá de nuevo — fijate letra por letra.';
+        res.className = 'resultado mal';
+        input.className = 'caja-escritura incorrecto';
+      }
+    }
+
+    function limpiarEj(inputId, resId) {
+      document.getElementById(inputId).value = '';
+      document.getElementById(inputId).className = 'caja-escritura';
+      document.getElementById(resId).textContent = '';
+    }
+  </script>
+
+</body>
+</html>
