@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Guía del Computador - Milagros</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      font-size: 2.2em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #ffe;
+      font-size: 1.1em;
+      margin-bottom: 30px;
+    }
+
+    .seccion {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .seccion h2 {
+      color: #764ba2;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #764ba2;
+      padding-bottom: 8px;
+    }
+
+    .teclas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .tecla-card {
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      border: 3px solid #764ba2;
+      transition: transform 0.2s;
+    }
+
+    .tecla-card:hover { transform: scale(1.03); }
+
+    .tecla-nombre {
+      display: inline-block;
+      background: #2d2d2d;
+      color: #fff;
+      font-size: 1.6em;
+      font-weight: bold;
+      padding: 12px 22px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      border-bottom: 5px solid #000;
+      font-family: monospace;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .tecla-emoji {
+      font-size: 2em;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .tecla-descripcion {
+      font-size: 1em;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .tecla-descripcion strong {
+      color: #764ba2;
+    }
+
+    /* Ejercicios */
+    .ejercicio {
+      background: #fffde7;
+      border-left: 6px solid #ffc107;
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 15px;
+    }
+
+    .ejercicio .numero {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #ffc107;
+    }
+
+    .ejercicio p {
+      font-size: 1.05em;
+      color: #333;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .caja-escritura {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.3em;
+      border: 3px solid #764ba2;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-family: 'Comic Sans MS', cursive;
+      background: #fafafa;
+    }
+
+    .btn-limpiar {
+      margin-top: 8px;
+      background: #764ba2;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      font-family: 'Comic Sans MS', cursive;
+    }
+
+    .btn-limpiar:hover { background: #5a3480; }
+
+    .resultado {
+      margin-top: 10px;
+      font-size: 1em;
+      color: #2e7d32;
+      font-weight: bold;
+      min-height: 24px;
+    }
+
+    .estrella { font-size: 1.5em; }
+  </style>
+</head>
+<body>
+
+  <h1>⌨️ Mi Guía del Computador</h1>
+  <p class="subtitulo">¡Hola Milagros! Acá vas a aprender las teclas más importantes 🌟</p>
+
+  <!-- SECCIÓN 1: TECLAS IMPORTANTES -->
+  <div class="seccion">
+    <h2>⌨️ Las teclas más importantes</h2>
+    <div class="teclas-grid">
+
+      <div class="tecla-card">
+        <span class="tecla-emoji">↵</span>
+        <div class="tecla-nombre">Enter</div>
+        <p class="tecla-descripcion">
+          Es como decir <strong>"¡Listo!"</strong> o <strong>"¡Sí!"</strong><br>
+          Cuando terminas de escribir algo, presionas Enter para confirmar.
+        </p>
+      </div>
+
+      <div class="tecla-card">
+        <span class="tecla-emoji">⌫</span>
+        <div class="tecla-nombre">Backspace</div>
+        <p class="tecla-descripcion">
+          Sirve para <strong>borrar</strong> la última letra que escribiste.<br>
+          Está a la derecha del teclado, arriba de Enter.
+        </p>
+      </div>
+
+      <div class="tecla-card">
+        <span class="tecla-emoji">⬆️</span>
+        <div class="tecla-nombre">Shift</div>
+        <p class="tecla-descripcion">
+          Sirve para escribir letras en <strong>MAYÚSCULA</strong>.<br>
+          Mantenés Shift apretado mientras escribís la letra.
+        </p>
+      </div>
+
+      <div class="tecla-card">
+        <span class="tecla-emoji">␣</span>
+        <div class="tecla-nombre">Espacio</div>
+        <p class="tecla-descripcion">
+          Es la <strong>barra larga</strong> de abajo del teclado.<br>
+          Sirve para dejar un espacio entre palabras.
+        </p>
+      </div>
+
+      <div class="tecla-card">
+        <span class="tecla-emoji">@</span>
+        <div class="tecla-nombre">@ arroba</div>
+        <p class="tecla-descripcion">
+          Se usa en los <strong>correos electrónicos</strong>.<br>
+          Para escribirla: presioná <strong>Alt Gr + 2</strong> al mismo tiempo.
+        </p>
+      </div>
+
+      <div class="tecla-card">
+        <span class="tecla-emoji">🔄</span>
+        <div class="tecla-nombre">Ctrl + Z</div>
+        <p class="tecla-descripcion">
+          Sirve para <strong>deshacer</strong> lo último que hiciste.<br>
+          ¡Como un botón mágico de "volver atrás"!
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: EJERCICIOS -->
+  <div class="seccion">
+    <h2>✏️ Ejercicios — ¡Practicá acá!</h2>
+
+    <div class="ejercicio">
+      <span class="numero">Ejercicio 1 ⭐</span>
+      <p>Escribí tu nombre completo en la caja de abajo. Usá el <strong>Espacio</strong> entre el nombre y el apellido.</p>
+      <input type="text" class="caja-escritura" id="ej1" placeholder="Escribí tu nombre acá...">
+      <button class="btn-limpiar" onclick="limpiar('ej1', 'res1')">Limpiar</button>
+      <div class="resultado" id="res1"></div>
+    </div>
+
+    <div class="ejercicio">
+      <span class="numero">Ejercicio 2 ⭐⭐</span>
+      <p>Escribí tu nombre pero con la <strong>primera letra en MAYÚSCULA</strong>. Para eso usá la tecla <strong>Shift</strong> mientras presionás la primera letra.</p>
+      <input type="text" class="caja-escritura" id="ej2" placeholder="Usá Shift para la primera letra...">
+      <button class="btn-limpiar" onclick="limpiar('ej2', 'res2')">Limpiar</button>
+      <div class="resultado" id="res2"></div>
+    </div>
+
+    <div class="ejercicio">
+      <span class="numero">Ejercicio 3 ⭐⭐⭐</span>
+      <p>Escribí esta frase completa: <strong>Hola me llamo Milagros</strong><br>
+      Usá el <strong>Espacio</strong> entre cada palabra y <strong>Backspace</strong> si te equivocás.</p>
+      <input type="text" class="caja-escritura" id="ej3" placeholder="Escribí la frase acá...">
+      <button class="btn-limpiar" onclick="limpiar('ej3', 'res3')">Limpiar</button>
+      <div class="resultado" id="res3"></div>
+    </div>
+
+    <div class="ejercicio">
+      <span class="numero">Ejercicio 4 ⭐⭐⭐⭐</span>
+      <p>Intentá escribir una dirección de correo inventada. Recordá que necesitás la <strong>@</strong> (Alt Gr + 2).<br>
+      Ejemplo: <strong>milagros@gmail.com</strong></p>
+      <input type="text" class="caja-escritura" id="ej4" placeholder="Escribí un correo inventado...">
+      <button class="btn-limpiar" onclick="limpiar('ej4', 'res4')">Limpiar</button>
+      <div class="resultado" id="res4"></div>
+    </div>
+
+  </div>
+
+  <script>
+    function limpiar(inputId, resId) {
+      document.getElementById(inputId).value = '';
+      document.getElementById(resId).textContent = '¡Listo! Intentá de nuevo 😊';
+      setTimeout(() => document.getElementById(resId).textContent = '', 2000);
+    }
+
+    // Detectar teclas y dar feedback
+    document.querySelectorAll('.caja-escritura').forEach(input => {
+      input.addEventListener('keydown', function(e) {
+        const res = this.nextElementSibling.nextElementSibling;
+        if (e.key === 'Enter') {
+          res.textContent = '¡Muy bien! Presionaste Enter ✅';
+        } else if (e.key === 'Backspace') {
+          res.textContent = '¡Bien! Usaste Backspace para borrar 👍';
+        } else if (e.key === ' ') {
+          res.textContent = '¡Bien! Pusiste un espacio 👍';
+        } else if (e.key === '@') {
+          res.textContent = '🎉 ¡Encontraste la arroba! ¡Excelente!';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
