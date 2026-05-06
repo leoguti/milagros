@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chat con Claude - Santiago</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      background: #1e293b;
+      color: #f1f5f9;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 14px 20px;
+      font-size: 18px;
+      font-weight: 600;
+      border-bottom: 1px solid #334155;
+    }
+    header span { color: #38bdf8; }
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .burbuja {
+      max-width: 75%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      line-height: 1.45;
+      animation: aparecer 0.2s ease;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .claude {
+      background: #334155;
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+    .claude::before {
+      content: "Claude";
+      display: block;
+      font-size: 12px;
+      color: #38bdf8;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .santiago {
+      background: #2563eb;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+      color: white;
+    }
+    .santiago::before {
+      content: "Tú";
+      display: block;
+      font-size: 12px;
+      color: #bfdbfe;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .sistema {
+      align-self: center;
+      background: #475569;
+      color: #cbd5e1;
+      font-size: 13px;
+      padding: 5px 10px;
+      border-radius: 8px;
+    }
+    footer {
+      background: #0f172a;
+      padding: 12px;
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid #334155;
+    }
+    #entrada {
+      flex: 1;
+      padding: 10px 14px;
+      font-size: 16px;
+      border: 1px solid #475569;
+      background: #1e293b;
+      color: #f1f5f9;
+      border-radius: 8px;
+      outline: none;
+      font-family: inherit;
+    }
+    #entrada:focus { border-color: #38bdf8; }
+    #enviar {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #38bdf8;
+      color: #0f172a;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+    }
+    #enviar:hover { background: #0ea5e9; }
+  </style>
+</head>
+<body>
+  <header>Chat con <span>Claude</span> · Santiago Daza · Grado 701</header>
+
+  <div id="chat">
+    <div class="burbuja sistema">Conectando...</div>
+  </div>
+
+  <footer>
+    <input id="entrada" placeholder="Escribe tu mensaje y presiona Enter..." autofocus>
+    <button id="enviar" onclick="enviar()">Enviar</button>
+  </footer>
+
+  <script>
+    const TOPICO = 'santiago-claude-chat-2026mayo06';
+    const URL_BASE = 'https://ntfy.sh/' + TOPICO;
+    const chat = document.getElementById('chat');
+    const entrada = document.getElementById('entrada');
+
+    function agregar(clase, texto) {
+      const div = document.createElement('div');
+      div.className = 'burbuja ' + clase;
+      div.textContent = texto;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    async function enviar() {
+      const texto = entrada.value.trim();
+      if (!texto) return;
+      entrada.value = '';
+      agregar('santiago', texto);
+      try {
+        await fetch(URL_BASE, {
+          method: 'POST',
+          headers: { 'Title': 'santiago' },
+          body: texto
+        });
+      } catch (e) {
+        agregar('sistema', 'Error al enviar: ' + e.message);
+      }
+    }
+
+    entrada.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') enviar();
+    });
+
+    const fuente = new EventSource(URL_BASE + '/sse');
+    fuente.onopen = () => {
+      chat.innerHTML = '';
+      agregar('sistema', 'Conectado. Escribe cuando estés listo.');
+    };
+    fuente.onmessage = (ev) => {
+      try {
+        const data = JSON.parse(ev.data);
+        if (data.event !== 'message') return;
+        const remitente = data.title || '';
+        if (remitente === 'claude') {
+          agregar('claude', data.message);
+        }
+      } catch (e) { console.error(e); }
+    };
+    fuente.onerror = () => agregar('sistema', 'Desconectado, reintentando...');
+  </script>
+</body>
+</html>
