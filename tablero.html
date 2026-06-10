@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🏆 Tablero — Grupo IA Salesiano</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+      margin: 0;
+      background: #0f1419;
+      color: #e6e6e6;
+      min-height: 100vh;
+    }
+    header {
+      background: #1a2332;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #2a3a52;
+    }
+    header h1 { margin: 0; font-size: 22px; color: #4fc3f7; }
+    header .fecha { color: #8899aa; font-size: 14px; }
+    #aviso {
+      text-align: center;
+      padding: 8px;
+      color: #d4c87a;
+      font-size: 14px;
+    }
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 14px;
+      padding: 18px;
+    }
+    .card {
+      background: #1e2a3a;
+      border: 1px solid #2a3a52;
+      border-radius: 12px;
+      padding: 14px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card.flash {
+      transform: scale(1.03);
+      box-shadow: 0 0 14px rgba(79,195,247,0.5);
+    }
+    .card h2 {
+      margin: 0 0 2px;
+      font-size: 19px;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card .curso { color: #8899aa; font-size: 12px; margin-bottom: 8px; }
+    .card .puntos {
+      font-size: 18px;
+      color: #ffd54f;
+      white-space: nowrap;
+    }
+    .card .estado {
+      font-size: 15px;
+      line-height: 1.4;
+      color: #cfd8dc;
+      white-space: pre-wrap;
+    }
+    .card .logros {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #81c784;
+      white-space: pre-wrap;
+    }
+    footer {
+      text-align: center;
+      color: #556;
+      font-size: 12px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏆 Tablero del Grupo IA — Salesiano Duitama</h1>
+    <span class="fecha" id="fecha">—</span>
+  </header>
+  <div id="aviso">⏳ Conectando al tablero en vivo...</div>
+  <div id="grid"></div>
+  <footer>Tablero vivo · actualizado por Claude durante la clase · Escuela OSM + Vibe Coding</footer>
+
+  <script>
+    const TOPICO = 'tablero-salesiano-2026';
+    const grid = document.getElementById('grid');
+    const aviso = document.getElementById('aviso');
+    const fecha = document.getElementById('fecha');
+
+    function render(estado) {
+      fecha.textContent = estado.titulo || '';
+      grid.innerHTML = '';
+      (estado.alumnos || []).forEach(a => {
+        const card = document.createElement('div');
+        card.className = 'card flash';
+        card.innerHTML =
+          '<h2>' + a.emoji + ' ' + a.nombre +
+          (a.puntos != null ? ' <span class="puntos">' + '⭐'.repeat(a.puntos) + (a.puntos === 0 ? '·' : '') + '</span>' : '') +
+          '</h2>' +
+          '<div class="curso">' + (a.curso || '') + '</div>' +
+          '<div class="estado">' + (a.estado || '') + '</div>' +
+          (a.logros ? '<div class="logros">' + a.logros + '</div>' : '');
+        grid.appendChild(card);
+        setTimeout(() => card.classList.remove('flash'), 800);
+      });
+      aviso.textContent = '🟢 En vivo · última actualización: ' + new Date().toLocaleTimeString();
+    }
+
+    // since=12h recupera el último estado publicado aunque abras la página tarde
+    const fuente = new EventSource('https://ntfy.envs.net/' + TOPICO + '/sse?since=12h');
+    fuente.onmessage = (ev) => {
+      try {
+        const data = JSON.parse(ev.data);
+        if (data.event !== 'message' || data.title !== 'estado') return;
+        render(JSON.parse(data.message));
+      } catch (e) { console.error(e); }
+    };
+    fuente.onerror = () => { aviso.textContent = '⚠️ Reconectando...'; };
+  </script>
+</body>
+</html>
