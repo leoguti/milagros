@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clase de hoy — Toca tu nombre</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #f1f5f9;
+      padding: 24px 16px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      margin: 12px 0 6px;
+      color: #38bdf8;
+    }
+    .fecha {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 15px;
+      margin-bottom: 28px;
+    }
+    .grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    a.btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px;
+      background: #1e293b;
+      border: 2px solid #334155;
+      border-radius: 14px;
+      color: #f1f5f9;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    a.btn:hover, a.btn:active {
+      background: #2563eb;
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+    .emoji { font-size: 28px; }
+    .seccion {
+      max-width: 900px;
+      margin: 36px auto 12px;
+      color: #94a3b8;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      border-top: 1px solid #334155;
+      padding-top: 22px;
+    }
+    a.tablero {
+      background: #7c3aed;
+      border-color: #a78bfa;
+    }
+    a.tablero:hover {
+      background: #6d28d9;
+    }
+    a.mayores {
+      background: #059669;
+      border-color: #34d399;
+    }
+    a.mayores:hover {
+      background: #047857;
+    }
+  </style>
+</head>
+<body>
+  <h1>Clase de hoy</h1>
+  <div class="fecha">Miércoles 17 de junio de 2026</div>
+
+  <div class="grid">
+    <a class="btn" href="chat.html"><span class="emoji">🧙‍♀️</span>Milagros</a>
+    <a class="btn" href="sara.html"><span class="emoji">✨</span>Sara</a>
+    <a class="btn" href="brayan.html"><span class="emoji">⚡</span>Brayan</a>
+    <a class="btn" href="nadia.html"><span class="emoji">🌙</span>Nadia</a>
+    <a class="btn" href="anamaria.html"><span class="emoji">🌸</span>Ana María</a>
+    <a class="btn" href="pena.html"><span class="emoji">🎯</span>Peña</a>
+    <a class="btn" href="stefania.html"><span class="emoji">🗺️</span>Stefania</a>
+    <a class="btn" href="cristian.html"><span class="emoji">♻️</span>Cristian</a>
+  </div>
+
+  <div class="seccion">Espacios grupales</div>
+  <div class="grid">
+    <a class="btn mayores" href="mayores.html"><span class="emoji">👥</span>Sala mayores</a>
+    <a class="btn tablero" href="tablero.html"><span class="emoji">📊</span>Tablero</a>
+  </div>
+</body>
+</html>
