@@ -102,6 +102,28 @@
       font-weight: 600;
     }
     .card .hdyc-link:hover { background: #15803d; }
+    .card .progress {
+      margin-top: 10px;
+      background: #0f1820;
+      border-radius: 6px;
+      height: 14px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid #2a3a52;
+    }
+    .card .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4ade80, #16a34a);
+      transition: width 0.5s ease;
+    }
+    .card .progress-text {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .card .progress-text b { color: #4ade80; }
     .card .nooosm {
       display: inline-block;
       margin-top: 10px;
@@ -146,6 +168,11 @@
             (a.ediciones != null ? '✏️ ' + a.ediciones.toLocaleString() + ' ediciones' : '') +
             '</div>'
           : '';
+        const META_DIAS = 80;
+        const progressBar = (a.mapping_days != null)
+          ? '<div class="progress-text"><span>📅 Días de mapeo</span><span><b>' + a.mapping_days + '</b> / ' + META_DIAS + '</span></div>' +
+            '<div class="progress"><div class="progress-fill" style="width:' + Math.min(100, Math.round(a.mapping_days/META_DIAS*100)) + '%"></div></div>'
+          : '';
         const osmLink = a.osm
           ? '<a class="osm-link" href="https://www.openstreetmap.org/user/' + encodeURIComponent(a.osm) + '" target="_blank">📍 Perfil OSM</a>' +
             '<a class="hdyc-link" href="https://hdyc.neis-one.org/user/' + encodeURIComponent(a.osm) + '" target="_blank">🔍 HDYC</a>'
@@ -158,6 +185,7 @@
           '<div class="estado">' + (a.estado || '') + '</div>' +
           (a.logros ? '<div class="logros">' + a.logros + '</div>' : '') +
           stats +
+          progressBar +
           osmLink;
         grid.appendChild(card);
         setTimeout(() => card.classList.remove('flash'), 800);
