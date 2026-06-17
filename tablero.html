@@ -133,6 +133,22 @@
       border-radius: 6px;
       font-size: 12px;
     }
+    .card.exploradora {
+      background: linear-gradient(135deg, #4a1e5c 0%, #7c3aed 100%);
+      border-color: #c084fc;
+    }
+    .card.exploradora h2 { color: #fce7f3; }
+    .card.exploradora .estado { color: #fae8ff; }
+    .seccion-titulo {
+      grid-column: 1 / -1;
+      color: #ffd54f;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-bottom: 1px solid #2a3a52;
+      padding: 16px 0 6px;
+      margin-top: 8px;
+    }
     footer {
       text-align: center;
       color: #556;
@@ -159,9 +175,28 @@
     function render(estado) {
       fecha.textContent = estado.titulo || '';
       grid.innerHTML = '';
-      (estado.alumnos || []).forEach(a => {
+      const todos = estado.alumnos || [];
+      const activos = todos.filter(a => a.seccion !== 'exploradoras');
+      const exploradoras = todos.filter(a => a.seccion === 'exploradoras');
+      const orden = [];
+      if (activos.length) {
+        orden.push({_titulo: '🗺️ Mapeadores activos'});
+        orden.push(...activos);
+      }
+      if (exploradoras.length) {
+        orden.push({_titulo: '✨ Exploradoras / Aprendices'});
+        orden.push(...exploradoras);
+      }
+      orden.forEach(a => {
+        if (a._titulo) {
+          const h = document.createElement('div');
+          h.className = 'seccion-titulo';
+          h.textContent = a._titulo;
+          grid.appendChild(h);
+          return;
+        }
         const card = document.createElement('div');
-        card.className = 'card flash';
+        card.className = 'card flash' + (a.seccion === 'exploradoras' ? ' exploradora' : '');
         const stats = (a.ediciones != null || a.changesets != null)
           ? '<div class="stats">' +
             (a.changesets != null ? '🧩 ' + a.changesets + ' changesets · ' : '') +
