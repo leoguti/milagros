@@ -116,6 +116,7 @@
 
     // since=12h recupera el último estado publicado aunque abras la página tarde
     const fuente = new EventSource('https://ntfy.envs.net/' + TOPICO + '/sse?since=12h');
+    fuente.onopen = () => { aviso.textContent = '🟢 Conectado · esperando primer estado…'; };
     fuente.onmessage = (ev) => {
       try {
         const data = JSON.parse(ev.data);
@@ -123,7 +124,7 @@
         render(JSON.parse(data.message));
       } catch (e) { console.error(e); }
     };
-    fuente.onerror = () => { aviso.textContent = '⚠️ Reconectando...'; };
+    fuente.onerror = () => { aviso.textContent = '⚠️ Reconectando…'; };
   </script>
 </body>
 </html>
