@@ -89,6 +89,19 @@
       font-weight: 600;
     }
     .card .osm-link:hover { background: #1d4ed8; }
+    .card .hdyc-link {
+      display: inline-block;
+      margin-top: 8px;
+      margin-left: 6px;
+      padding: 7px 12px;
+      background: #16a34a;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .card .hdyc-link:hover { background: #15803d; }
     .card .nooosm {
       display: inline-block;
       margin-top: 10px;
@@ -134,7 +147,8 @@
             '</div>'
           : '';
         const osmLink = a.osm
-          ? '<a class="osm-link" href="https://www.openstreetmap.org/user/' + encodeURIComponent(a.osm) + '" target="_blank">📍 Ver perfil OSM</a>'
+          ? '<a class="osm-link" href="https://www.openstreetmap.org/user/' + encodeURIComponent(a.osm) + '" target="_blank">📍 Perfil OSM</a>' +
+            '<a class="hdyc-link" href="https://hdyc.neis-one.org/user/' + encodeURIComponent(a.osm) + '" target="_blank">🔍 HDYC</a>'
           : (a.curso === '302' || a.curso === '201' ? '<span class="nooosm">— sin cuenta OSM (aún) —</span>' : '<span class="nooosm">⏳ username pendiente</span>');
         card.innerHTML =
           '<h2>' + a.emoji + ' ' + a.nombre +
