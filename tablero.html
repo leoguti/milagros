@@ -72,6 +72,32 @@
       color: #81c784;
       white-space: pre-wrap;
     }
+    .card .stats {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #ffd54f;
+    }
+    .card .osm-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 7px 12px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .card .osm-link:hover { background: #1d4ed8; }
+    .card .nooosm {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 7px 12px;
+      background: #475569;
+      color: #cbd5e1;
+      border-radius: 6px;
+      font-size: 12px;
+    }
     footer {
       text-align: center;
       color: #556;
@@ -101,13 +127,24 @@
       (estado.alumnos || []).forEach(a => {
         const card = document.createElement('div');
         card.className = 'card flash';
+        const stats = (a.ediciones != null || a.changesets != null)
+          ? '<div class="stats">' +
+            (a.changesets != null ? '🧩 ' + a.changesets + ' changesets · ' : '') +
+            (a.ediciones != null ? '✏️ ' + a.ediciones.toLocaleString() + ' ediciones' : '') +
+            '</div>'
+          : '';
+        const osmLink = a.osm
+          ? '<a class="osm-link" href="https://www.openstreetmap.org/user/' + encodeURIComponent(a.osm) + '" target="_blank">📍 Ver perfil OSM</a>'
+          : (a.curso === '302' || a.curso === '201' ? '<span class="nooosm">— sin cuenta OSM (aún) —</span>' : '<span class="nooosm">⏳ username pendiente</span>');
         card.innerHTML =
           '<h2>' + a.emoji + ' ' + a.nombre +
           (a.puntos != null ? ' <span class="puntos">' + '⭐'.repeat(a.puntos) + (a.puntos === 0 ? '·' : '') + '</span>' : '') +
           '</h2>' +
           '<div class="curso">' + (a.curso || '') + '</div>' +
           '<div class="estado">' + (a.estado || '') + '</div>' +
-          (a.logros ? '<div class="logros">' + a.logros + '</div>' : '');
+          (a.logros ? '<div class="logros">' + a.logros + '</div>' : '') +
+          stats +
+          osmLink;
         grid.appendChild(card);
         setTimeout(() => card.classList.remove('flash'), 800);
       });
