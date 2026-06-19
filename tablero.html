@@ -54,6 +54,21 @@
       justify-content: space-between;
       align-items: center;
     }
+    .actividad {
+      font-size: 14px;
+      margin-left: 6px;
+    }
+    .actividad.online { animation: pulse 1.6s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .estado-act {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-bottom: 6px;
+      font-style: italic;
+    }
     .card .curso { color: #8899aa; font-size: 12px; margin-bottom: 8px; }
     .card .puntos {
       font-size: 18px;
@@ -212,11 +227,18 @@
           ? '<a class="osm-link" href="https://www.openstreetmap.org/user/' + encodeURIComponent(a.osm) + '" target="_blank">📍 Perfil OSM</a>' +
             '<a class="hdyc-link" href="https://hdyc.neis-one.org/user/' + encodeURIComponent(a.osm) + '" target="_blank">🔍 HDYC</a>'
           : (a.curso === '302' || a.curso === '201' ? '<span class="nooosm">— sin cuenta OSM (aún) —</span>' : '<span class="nooosm">⏳ username pendiente</span>');
+        const actividad = a.activo
+          ? '<span class="actividad' + (a.activo === '🟢' ? ' online' : '') + '">' + a.activo + '</span>'
+          : '';
+        const estadoAct = a.estado_actividad
+          ? '<div class="estado-act">' + a.estado_actividad + '</div>'
+          : '';
         card.innerHTML =
-          '<h2>' + a.emoji + ' ' + a.nombre +
+          '<h2>' + a.emoji + ' ' + a.nombre + actividad +
           (a.puntos != null ? ' <span class="puntos">' + '⭐'.repeat(a.puntos) + (a.puntos === 0 ? '·' : '') + '</span>' : '') +
           '</h2>' +
           '<div class="curso">' + (a.curso || '') + '</div>' +
+          estadoAct +
           '<div class="estado">' + (a.estado || '') + '</div>' +
           (a.logros ? '<div class="logros">' + a.logros + '</div>' : '') +
           stats +
