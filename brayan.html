@@ -180,14 +180,14 @@
     }
     async function cargarHistorial() {
       try {
-        const res = await fetch(URL_BASE + '/json?poll=1&since=12h');
+        const res = await fetch(URL_BASE + '/json?poll=1&since=1h');
         const text = await res.text();
         text.trim().split(/\n/).forEach(line => { if (line) { try { pintar(JSON.parse(line)); } catch (e) {} } });
       } catch (e) {}
     }
     cargarHistorial();
     const fuente = new EventSource(URL_BASE + '/sse');
-    fuente.onopen = () => { cargarHistorial(); };
+    fuente.onopen = () => {};
     fuente.onmessage = (ev) => { try { pintar(JSON.parse(ev.data)); } catch (e) {} };
     fuente.onerror = () => {};
   </script>
