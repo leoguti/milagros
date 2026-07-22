@@ -182,8 +182,7 @@
       try {
         const res = await fetch(URL_BASE + '/json?poll=1&since=12h');
         const text = await res.text();
-        text.trim().split('
-').forEach(line => { if (line) { try { pintar(JSON.parse(line)); } catch (e) {} } });
+        text.trim().split(/\n/).forEach(line => { if (line) { try { pintar(JSON.parse(line)); } catch (e) {} } });
       } catch (e) {}
     }
     cargarHistorial();
