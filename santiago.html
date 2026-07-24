@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chat con Claude - Santiago</title>
+  <title>🚌 Chat de Santiago</title>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -59,13 +59,13 @@
       font-weight: 600;
       margin-bottom: 4px;
     }
-    .santiago {
+    .dai {
       background: #2563eb;
       align-self: flex-end;
       border-bottom-right-radius: 2px;
       color: white;
     }
-    .santiago::before {
+    .dai::before {
       content: "Tú";
       display: block;
       font-size: 12px;
@@ -115,7 +115,7 @@
   </style>
 </head>
 <body>
-  <header>Chat con <span>Claude</span> · Santiago Daza · Grado 701</header>
+  <header>Chat con <span>Claude</span> · Dai Daza · Grado 701</header>
 
   <div id="chat">
     <div class="burbuja sistema">Conectando...</div>
@@ -144,11 +144,11 @@
       const texto = entrada.value.trim();
       if (!texto) return;
       entrada.value = '';
-      agregar('santiago', texto);
+      agregar('dai', texto);
       try {
         await fetch(URL_BASE, {
           method: 'POST',
-          headers: { 'Title': 'santiago' },
+          headers: { 'Title': 'dai' },
           body: texto
         });
       } catch (e) {
