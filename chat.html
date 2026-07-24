@@ -155,22 +155,27 @@
       if (e.key === 'Enter') enviar();
     });
 
-    const fuente = new EventSource(URL_BASE + '/sse');
-    fuente.onopen = () => {
-      chat.innerHTML = '';
-      agregar('sistema', '✅ Conectado. ¡Escribe algo!');
-    };
-    fuente.onmessage = (ev) => {
+    const vistos = new Set();
+    function pintar(data, esHistorial) {
+      if (!data || data.event !== 'message') return;
+      if (data.id && vistos.has(data.id)) return;
+      if (data.id) vistos.add(data.id);
+      const remitente = data.title || '';
+      if (remitente === 'claude') agregar('claude', data.message);
+      else if (remitente === 'milagros' && esHistorial) agregar('milagros', data.message);
+    }
+    async function cargarHistorial() {
       try {
-        const data = JSON.parse(ev.data);
-        if (data.event !== 'message') return;
-        const remitente = data.title || '';
-        if (remitente === 'claude') {
-          agregar('claude', data.message);
-        }
-      } catch (e) { console.error(e); }
-    };
-    fuente.onerror = () => agregar('sistema', '⚠️ Desconectado, reintentando...');
+        const res = await fetch(URL_BASE + '/json?poll=1&since=1h');
+        const text = await res.text();
+        text.trim().split(/\n/).forEach(line => { if (line) { try { pintar(JSON.parse(line), true); } catch (e) {} } });
+      } catch (e) {}
+    }
+    cargarHistorial();
+    const fuente = new EventSource(URL_BASE + '/sse');
+    fuente.onopen = () => {};
+    fuente.onmessage = (ev) => { try { pintar(JSON.parse(ev.data), false); } catch (e) {} };
+    fuente.onerror = () => {};
   </script>
 </body>
 </html>
