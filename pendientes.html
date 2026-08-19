@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🎯 Paradas pendientes — con pistas</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#0f1020;color:#eef;margin:0;padding:16px}
+ h1{text-align:center;font-size:1.3rem} .sub{text-align:center;color:#9aa0c8;font-size:.9rem;margin-bottom:14px}
+ .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;max-width:1100px;margin:0 auto}
+ .card{background:#1a1c34;border-radius:12px;padding:12px}
+ .head{display:flex;justify-content:space-between;align-items:center}
+ .nom{font-weight:800;font-size:1.1rem} .pts{background:#ffd43b;color:#211;font-weight:800;border-radius:14px;padding:2px 10px;font-size:.85rem}
+ .pista{color:#4dd4ff;font-size:.9rem;margin:6px 0}
+ .rutas{color:#9aa0c8;font-size:.78rem;line-height:1.5}
+ .go{display:block;text-align:center;margin:16px auto;max-width:340px;background:linear-gradient(90deg,#38d996,#4dd4ff);color:#012;font-weight:800;padding:12px;border-radius:12px;text-decoration:none;font-size:1.05rem}
+</style></head><body>
+<h1>🎯 Paradas pendientes (18)</h1>
+<div class="sub">Cada tarjeta trae su PISTA y las rutas donde aparece · ¡ubícalas bien y gana los puntos!</div>
+<a class="go" href="https://rutas.busboy.app/juego-paradas">🏁 Ir al juego a localizarlas</a>
+<div class="grid"><div class="card" style="">
+  <div class="head"><span class="nom">La Playa</span><span class="pts">150 pts</span></div>
+  <div class="pista">💡 Vereda ENTRE Tuta y Tunja (Boyacá), sobre la vía</div>
+  <div class="rutas">🚌 Tunja → El Barne → La Playa → Tuta<br>Tuta → La Playa → El Barne → Tunja</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Santa Marta</span><span class="pts">130 pts</span></div>
+  <div class="pista">💡 La ciudad de la costa (Magdalena) — ubicar el TERMINAL de transportes</div>
+  <div class="rutas">🚌 Bogota — Terminal Salitre → Tunja → Duitama → Pamplona → Santa Marta<br>Santa Marta → Pamplona → Duitama → Tunja → Bogota — Terminal Salitre</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">El Banco</span><span class="pts">110 pts</span></div>
+  <div class="pista">💡 Municipio del MAGDALENA (≈9.00, -73.97)</div>
+  <div class="rutas">🚌 Bogota — Terminal Salitre → Tunja → Bucaramanga — Terminal de Transportes de Bucaramanga → Aguachica → El Banco<br>Bogota — Terminal Salitre → Tunja → Bucaramanga — Terminal de Transportes de Bucaramanga → Aguachica → El Burro → Tamalameque → El Banco → Guamal<br>El Banco → Aguachica → Bucaramanga — Terminal de Transportes de Bucaramanga → Tunja → Bogota — Terminal Salitre</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Aguachica</span><span class="pts">110 pts</span></div>
+  <div class="pista">💡 Municipio del CESAR, sobre la Ruta del Sol (≈8.31, -73.60)</div>
+  <div class="rutas">🚌 Bogota — Terminal Salitre → Tunja → Bucaramanga — Terminal de Transportes de Bucaramanga → Aguachica → El Banco<br>Bogota — Terminal Salitre → Tunja → Bucaramanga — Terminal de Transportes de Bucaramanga → Aguachica → El Burro → Tamalameque → El Banco → Guamal<br>El Banco → Aguachica → Bucaramanga — Terminal de Transportes de Bucaramanga → Tunja → Bogota — Terminal Salitre</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">El Burro</span><span class="pts">70 pts</span></div>
+  <div class="pista">💡 Caserío del CESAR sobre la Ruta del Sol (ruta Bogotá→Guamal)</div>
+  <div class="rutas">🚌 Bogota — Terminal Salitre → Tunja → Bucaramanga — Terminal de Transportes de Bucaramanga → Aguachica → El Burro → Tamalameque → El Banco → Guamal<br>Guamal → El Banco → Tamalameque → El Burro → Aguachica → Bucaramanga — Terminal de Transportes de Bucaramanga → Tunja → Bogota — Terminal Salitre</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Tamalameque</span><span class="pts">70 pts</span></div>
+  <div class="pista">💡 Municipio del CESAR (≈8.86, -73.81)</div>
+  <div class="rutas">🚌 Bogota — Terminal Salitre → Tunja → Bucaramanga — Terminal de Transportes de Bucaramanga → Aguachica → El Burro → Tamalameque → El Banco → Guamal<br>Guamal → El Banco → Tamalameque → El Burro → Aguachica → Bucaramanga — Terminal de Transportes de Bucaramanga → Tunja → Bogota — Terminal Salitre</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Agua Azul</span><span class="pts">70 pts</span></div>
+  <div class="pista">💡 Es AGUAZUL, Casanare — vía a Yopal (≈5.17, -72.55)</div>
+  <div class="rutas">🚌 Bogota — Terminal Salitre → Sogamoso — Terminal de Buses Sogamoso → Agua Azul → Yopal<br>Yopal → Agua Azul → Sogamoso — Terminal de Buses Sogamoso → Bogota — Terminal Salitre</div>
+</div><div class="card" style="opacity:.55">
+  <div class="head"><span class="nom">La Union</span><span class="pts">50 pts</span></div>
+  <div class="pista">💡 ⏸️ RESERVADA (el profe consulta a la empresa) — no localizar aún</div>
+  <div class="rutas">🚌 La Union → San Luis de Gaceno → Tibaná → Tunja<br>La Union → Santa Maria → Garagoa → Tibaná → Tunja<br>Tunja → Tibaná → Garagoa → Santa Maria → La Union</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Casablanca</span><span class="pts">50 pts</span></div>
+  <div class="pista">💡 Sobre la vía San Pedro de Iguaque ↔ Tunja (Boyacá)</div>
+  <div class="rutas">🚌 San Pedro de Iguaque → Casablanca → Piedra Gorda → Tunja<br>Tunja → Piedra Gorda → Casablanca → San Pedro de Iguaque</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Piedra Gorda</span><span class="pts">50 pts</span></div>
+  <div class="pista">💡 Vereda en la vía Tunja ↔ San Pedro de Iguaque (zona Chíquiza)</div>
+  <div class="rutas">🚌 San Pedro de Iguaque → Casablanca → Piedra Gorda → Tunja<br>Tunja → Piedra Gorda → Casablanca → San Pedro de Iguaque</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Gambita</span><span class="pts">30 pts</span></div>
+  <div class="pista">💡 Municipio de SANTANDER, al NORTE de Tunja (≈5.92, -73.32)</div>
+  <div class="rutas">🚌 Bogota — Terminal Salitre → Tunja → Gambita<br>Gambita → Tunja → Bogota — Terminal Salitre</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Guadalupe</span><span class="pts">30 pts</span></div>
+  <div class="pista">💡 Municipio de SANTANDER (≈6.25, -73.42) — ¡NO el barrio de Duitama!</div>
+  <div class="rutas">🚌 Bogota — Terminal Salitre → Tunja → Guadalupe<br>Guadalupe → Tunja → Bogota — Terminal Salitre</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Suaita</span><span class="pts">30 pts</span></div>
+  <div class="pista">💡 Municipio de SANTANDER (≈6.10, -73.44) — ¡NO es Santana!</div>
+  <div class="rutas">🚌 Bogota — Terminal Salitre → Tunja → Suaita<br>Suaita → Tunja → Bogota — Terminal Salitre</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Ubate</span><span class="pts">30 pts</span></div>
+  <div class="pista">💡 Municipio de CUNDINAMARCA (≈5.31, -73.81)</div>
+  <div class="rutas">🚌 Bogota — Terminal Salitre → Ubate → Chiquinquira → Samaca → Tunja<br>Tunja → Samaca → Chiquinquira → Ubate → Bogota — Terminal Salitre</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Chivor</span><span class="pts">30 pts</span></div>
+  <div class="pista">💡 CABECERA municipal de Chivor, Boyacá (≈4.888, -73.368)</div>
+  <div class="rutas">🚌 Chivor → Tibaná → Garagoa → Tunja<br>Tunja → Garagoa → Tibaná → Chivor</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">La Capilla</span><span class="pts">30 pts</span></div>
+  <div class="pista">💡 Municipio de Boyacá cerca de TENZA (≈5.111, -73.457)</div>
+  <div class="rutas">🚌 La Capilla → Chinavita → Tibaná → Tunja<br>Tunja → Tibaná → Chinavita → La Capilla</div>
+</div><div class="card" style="">
+  <div class="head"><span class="nom">Monterrey</span><span class="pts">30 pts</span></div>
+  <div class="pista">💡 Municipio del CASANARE (≈4.88, -72.90)</div>
+  <div class="rutas">🚌 Monterrey → Almeida → Garagoa → Tibaná → Tunja<br>Tunja → Tibaná → Garagoa → Almeida → Monterrey</div>
+</div><div class="card" style="opacity:.55">
+  <div class="head"><span class="nom">Sote</span><span class="pts">30 pts</span></div>
+  <div class="pista">💡 ⏸️ RESERVADA (el profe confirma el paradero) — no localizar aún</div>
+  <div class="rutas">🚌 Sote → Motavita → Tunja<br>Tunja → Motavita → Sote</div>
+</div></div>
+</body></html>
