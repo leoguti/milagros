@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📖 Sara y el Bosque Mágico</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+      background: linear-gradient(135deg, #667eea 0%, #9f7aea 50%, #f093fb 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .portada {
+      text-align: center;
+      color: white;
+      padding: 30px 10px 20px;
+    }
+    .portada .emoji-grande { font-size: 3.5em; }
+    .portada h1 {
+      font-size: 2.4em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      margin: 10px 0;
+    }
+    .portada .autora {
+      display: inline-block;
+      background: rgba(255,255,255,0.25);
+      border-radius: 30px;
+      padding: 10px 25px;
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    .pagina {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      margin: 0 auto 25px;
+      max-width: 640px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      font-size: 1.25em;
+      line-height: 1.7;
+      color: #444;
+    }
+    .pagina .num {
+      color: #9f7aea;
+      font-weight: bold;
+      font-size: 0.8em;
+      letter-spacing: 2px;
+    }
+    .pagina .escena { font-size: 2.2em; text-align: center; margin: 10px 0; }
+
+    .sara-dijo {
+      background: #f3ebff;
+      border-left: 6px solid #9f7aea;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin: 14px 0;
+      font-style: italic;
+      color: #5a3d99;
+    }
+    .sara-dijo .etiqueta {
+      display: block;
+      font-style: normal;
+      font-size: 0.7em;
+      color: #b39ddb;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .coronas {
+      text-align: center;
+      font-size: 1.1em;
+    }
+    .coronas .corona {
+      display: inline-block;
+      background: #fff8e1;
+      border: 3px solid #ffd54f;
+      border-radius: 15px;
+      padding: 12px 18px;
+      margin: 8px;
+    }
+    .coronas .corona .icono { font-size: 2em; display: block; }
+
+    .fin {
+      text-align: center;
+      color: white;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      margin: 30px 0 10px;
+    }
+
+    .dedicatoria {
+      background: #fff0f6;
+      border: 3px dashed #f093fb;
+      border-radius: 20px;
+      padding: 25px;
+      margin: 0 auto 30px;
+      max-width: 640px;
+      text-align: center;
+      font-size: 1.3em;
+      color: #c2185b;
+    }
+
+    .creditos {
+      text-align: center;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.95em;
+      padding-bottom: 30px;
+    }
+
+    @media print {
+      body { background: white; }
+      .portada, .fin { color: #5a3d99; text-shadow: none; }
+      .pagina, .dedicatoria { box-shadow: none; border: 1px solid #ddd; }
+      .creditos { color: #888; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portada">
+    <div class="emoji-grande">🌲✨⛸️</div>
+    <h1>Sara y el Bosque Mágico</h1>
+    <div class="autora">Escrito por <strong>Sara Valeria</strong>, 7 años 👑</div>
+  </div>
+
+  <div class="pagina">
+    <span class="num">PÁGINA 1</span>
+    <div class="escena">🗺️⛸️</div>
+    <p>Había una vez una niña llamada <strong>Sara</strong>, que era patinadora y exploradora. Un día encontró un mapa muy misterioso…</p>
+    <div class="sara-dijo">
+      <span class="etiqueta">✏️ IDEA DE SARA</span>
+      ¡El mapa mostraba un <strong>bosque mágico</strong>!
+    </div>
+  </div>
+
+  <div class="pagina">
+    <span class="num">PÁGINA 2</span>
+    <div class="escena">🚪💎</div>
+    <p>En la entrada del bosque había una <strong>puerta de cristal</strong> que solo se abría con una contraseña secreta. Sara respiró profundo y escribió la palabra…</p>
+    <div class="sara-dijo">
+      <span class="etiqueta">✏️ SARA ESCRIBIÓ</span>
+      mágico
+    </div>
+    <p>…¡con su tilde y todo! La puerta brilló y se abrió despacito. ✨</p>
+  </div>
+
+  <div class="pagina">
+    <span class="num">PÁGINA 3</span>
+    <div class="escena">🧊❄️</div>
+    <p>Adentro había dos caminos: uno de piedras y uno de hielo. Sara eligió el camino de hielo…</p>
+    <div class="sara-dijo">
+      <span class="etiqueta">✏️ SARA ESCRIBIÓ</span>
+      por el hielo por que es más fácil pasar
+    </div>
+    <p>¡Claro! ¡Una patinadora en el hielo es invencible! ⛸️</p>
+  </div>
+
+  <div class="pagina">
+    <span class="num">PÁGINA 4</span>
+    <div class="escena">😱🧊</div>
+    <p>Pero de pronto… ¡CRAC! El hielo empezó a crujir bajo sus pies…</p>
+    <div class="sara-dijo">
+      <span class="etiqueta">✏️ SARA ESCRIBIÓ</span>
+      intentaron escapar llendo por una parte que no era tan frágil y lograron escapar
+    </div>
+  </div>
+
+  <div class="pagina">
+    <span class="num">PÁGINA 5</span>
+    <div class="escena">🎁🔒</div>
+    <p>Al final del camino apareció un <strong>cofre con candado</strong>. Pero este cofre era especial: solo se abría si le hacían una pregunta perfecta. Sara escribió…</p>
+    <div class="sara-dijo">
+      <span class="etiqueta">✏️ SARA ESCRIBIÓ</span>
+      ¿que tienes adentro?
+    </div>
+    <p>¡Clic! El candado se abrió. 🗝️</p>
+  </div>
+
+  <div class="pagina">
+    <span class="num">PÁGINA 6</span>
+    <div class="escena">👑👑👑</div>
+    <p>Adentro del cofre brillaban <strong>tres coronas</strong> con su nombre:</p>
+    <div class="coronas">
+      <div class="corona"><span class="icono">🪄</span>Borrador<br>Mágico</div>
+      <div class="corona"><span class="icono">🎩</span>Maga de<br>las Tildes</div>
+      <div class="corona"><span class="icono">❓</span>Reina de las<br>Preguntas</div>
+    </div>
+  </div>
+
+  <div class="pagina">
+    <span class="num">PÁGINA 7 — EL FINAL, ESCRITO POR SARA</span>
+    <div class="escena">🏠💖</div>
+    <div class="sara-dijo">
+      <span class="etiqueta">✏️ SARA ESCRIBIÓ</span>
+      Sara se puso muy feliz y llego a su casa y le conto a sus papas y siempre iba al colegio con sus coronas
+    </div>
+  </div>
+
+  <div class="fin">✨ FIN ✨</div>
+
+  <div class="dedicatoria" id="dedicatoria">
+    💌 <strong>Dedicatoria de Sara:</strong><br>
+    <span id="texto-dedicatoria">PARA: MI MAMÁ Y MI PAPÁ QUE SON MI MAYOR TESORO Y LOS AMO CON TODO EL ALMA.</span>
+  </div>
+
+  <div class="creditos">
+    Cuento inventado y escrito por Sara Valeria (curso 201) 📖<br>
+    con el profe Leonardo y Claude el robot 🤖 · Colegio Salesiano Duitama · agosto 2026
+  </div>
+
+</body>
+</html>
