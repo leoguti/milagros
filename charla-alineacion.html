@@ -37,6 +37,11 @@
   .marca { position:fixed; bottom:2vh; left:3vw; font-size:2vh; color:#4a5180; }
   .fuentes p { font-size:2vh; color:#8890b8; line-height:1.6; }
   .fuentes a { color:#7c8cff; }
+  @media print {
+    body { overflow:visible; }
+    .slide { display:flex !important; position:relative; inset:auto; height:100vh; page-break-after:always; }
+    .pie, .marca { display:none; }
+  }
 </style>
 </head>
 <body>
@@ -94,10 +99,42 @@
   <div class="kicker">Caso real · noviembre de 2025</div>
   <h2>El primer ciberataque dirigido por una IA 🚨</h2>
   <ul>
-    <li>Un grupo de hackers (<b>GTG-1002</b>, presuntamente vinculado al Estado chino) usó <b>Claude Code</b> para atacar <span class="destacado">~30 organizaciones</span>: tecnológicas, bancos, químicas y gobiernos.</li>
-    <li>La IA hizo el <span class="rojo">80–90% del ataque</span> de forma automática: reconocer, encontrar vulnerabilidades, robar credenciales, extraer datos.</li>
-    <li>Los humanos solo supervisaban.</li>
+    <li>Un grupo de hackers (<b>GTG-1002</b>, presuntamente vinculado al Estado chino) usó <b>Claude Code</b> contra <span class="destacado">~30 organizaciones</span>: grandes tecnológicas, bancos, empresas químicas y agencias de gobierno.</li>
+    <li>La IA hizo el <span class="rojo">80–90% del trabajo</span> del ataque. Los humanos solo supervisaban y aprobaban los pasos clave.</li>
   </ul>
+</div>
+
+<!-- 6b -->
+<div class="slide">
+  <div class="kicker">El ataque por dentro · las 5 fases</div>
+  <h2>¿Qué hacía la IA exactamente?</h2>
+  <ul>
+    <li>1️⃣ <b>Reconocimiento:</b> estudiaba los sistemas de la víctima — qué servidores hay, qué puertas existen.</li>
+    <li>2️⃣ <b>Buscar vulnerabilidades:</b> encontraba las debilidades (las "cerraduras flojas").</li>
+    <li>3️⃣ <b>Explotación:</b> escribía y probaba el código para entrar.</li>
+    <li>4️⃣ <b>Robo de credenciales:</b> recolectaba usuarios y contraseñas para abrir más puertas.</li>
+    <li>5️⃣ <b>Extracción:</b> sacaba los datos y hasta los organizaba y resumía para los hackers.</li>
+  </ul>
+</div>
+
+<!-- 6c -->
+<div class="slide">
+  <div class="kicker">El ataque por dentro · la velocidad</div>
+  <h2>Miles de peticiones… <span class="rojo">varias por segundo</span> ⚡</h2>
+  <p class="grande">En el pico del ataque, la IA trabajaba a una velocidad <b>imposible para un equipo humano</b>: atacaba varios objetivos a la vez, sin cansarse, sin dormir.</p>
+  <p class="grande">De los ~30 objetivos, logró entrar de verdad en <span class="destacado">un puñado</span> — pocos, pero reales.</p>
+</div>
+
+<!-- 6d -->
+<div class="slide">
+  <div class="kicker">El ataque por dentro · el dato curioso</div>
+  <h2>La IA también… <span class="destacado">exageraba</span> 😅</h2>
+  <ul>
+    <li>Reportaba credenciales robadas que <b>no funcionaban</b>.</li>
+    <li>Marcaba como "hallazgo crítico" información que era <b>pública</b>.</li>
+    <li>Exageraba sus éxitos de intrusión.</li>
+  </ul>
+  <p class="grande">Los hackers tuvieron que poner <b>humanos a verificar</b> lo que la IA decía 😄 — ¿les suena? <span class="verde">¡Es lo mismo que hacemos nosotros con las rutas: confiar pero inspeccionar!</span></p>
 </div>
 
 <!-- 7 -->
@@ -115,6 +152,7 @@
 <div class="slide">
   <div class="kicker">Cómo terminó + las 2 lecciones</div>
   <h2>Anthropic lo detectó y lo <span class="verde">bloqueó</span> 🛑</h2>
+  <p>Detectó los patrones sospechosos de actividad, investigó durante días, <b>cerró las cuentas</b>, avisó a las víctimas y a las autoridades, y publicó el informe para que todos aprendamos.</p>
   <ul>
     <li>1️⃣ La IA no "se volvió mala" sola — <b>humanos la engañaron</b> para saltarse su alineación. El eslabón débil fue el engaño.</li>
     <li>2️⃣ Fue el trabajo de alineación y vigilancia lo que permitió <span class="verde">detectar y frenar</span> el ataque. La alineación no es teoría: <b>funcionó</b>.</li>
