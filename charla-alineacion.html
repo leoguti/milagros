@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧭 La Alineación de la IA</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background:#0f1220; color:#eef1ff; overflow:hidden; }
+  .slide {
+    display:none; position:fixed; inset:0; padding:6vh 8vw;
+    flex-direction:column; justify-content:center; gap:3vh;
+  }
+  .slide.activa { display:flex; }
+  .kicker { font-size:2.2vh; letter-spacing:3px; color:#7c8cff; text-transform:uppercase; font-weight:700; }
+  h1 { font-size:7.5vh; line-height:1.1; }
+  h2 { font-size:5.5vh; line-height:1.15; }
+  p, li { font-size:3.4vh; line-height:1.45; color:#c9d0f2; }
+  li { margin:1.2vh 0 1.2vh 3vw; }
+  .grande { font-size:4.2vh; color:#eef1ff; }
+  .destacado { color:#ffd166; font-weight:700; }
+  .rojo { color:#ff6b81; font-weight:700; }
+  .verde { color:#5ee6a8; font-weight:700; }
+  .emoji-xl { font-size:11vh; }
+  .cita {
+    border-left:6px solid #7c8cff; padding:2vh 3vw; background:#181c33;
+    border-radius:0 14px 14px 0; font-style:italic; font-size:3.6vh; color:#eef1ff;
+  }
+  .tarjetas { display:flex; gap:2vw; flex-wrap:wrap; }
+  .tarjeta { flex:1; min-width:26vw; background:#181c33; border-radius:16px; padding:3vh 2vw; border:1px solid #2a3055; }
+  .tarjeta .icono { font-size:6vh; }
+  .tarjeta p { font-size:2.9vh; }
+  .pie {
+    position:fixed; bottom:2vh; right:3vw; font-size:2vh; color:#4a5180;
+    user-select:none;
+  }
+  .marca { position:fixed; bottom:2vh; left:3vw; font-size:2vh; color:#4a5180; }
+  .fuentes p { font-size:2vh; color:#8890b8; line-height:1.6; }
+  .fuentes a { color:#7c8cff; }
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<div class="slide activa">
+  <div class="emoji-xl">🧭🤖</div>
+  <h1>¿Puede una IA hacer lo que <span class="rojo">NO</span> queremos?</h1>
+  <p class="grande">Una charla corta sobre la <span class="destacado">ALINEACIÓN</span> de la Inteligencia Artificial</p>
+  <p>Grupo OpenStreetMap Vibe Coding · Colegio Salesiano Duitama</p>
+</div>
+
+<!-- 2 -->
+<div class="slide">
+  <div class="kicker">Para empezar</div>
+  <h2>Ustedes hablan con una IA <span class="destacado">todas las clases</span></h2>
+  <ul>
+    <li>Les revisa rutas de buses 🚌</li>
+    <li>Les ayuda a escribir cuentos 📖</li>
+    <li>Les responde al segundo, a cualquier hora 🤖</li>
+  </ul>
+  <p class="grande">Pregunta: ¿cómo sabemos que una IA hará lo que queremos… <span class="rojo">y no otra cosa</span>?</p>
+</div>
+
+<!-- 3 -->
+<div class="slide">
+  <div class="kicker">El concepto</div>
+  <h2>Eso se llama <span class="destacado">ALINEACIÓN</span></h2>
+  <p class="cita">Que los objetivos y el comportamiento de una IA estén alineados con lo que los humanos <b>realmente queremos</b> — no solo con lo que le pedimos al pie de la letra.</p>
+  <p>Por eso se entrena a la IA para ser útil <span class="verde">Y TAMBIÉN</span> para negarse a hacer daño. Por eso Claude a veces dice: <i>"eso no lo puedo hacer".</i></p>
+</div>
+
+<!-- 4 -->
+<div class="slide">
+  <div class="kicker">Analogía 1 — la de nosotros</div>
+  <div class="emoji-xl">🚌</div>
+  <h2>El bus desalineado</h2>
+  <p class="grande">Un bus alineado te lleva a donde <span class="verde">TÚ</span> necesitas, por la ruta correcta.</p>
+  <p class="grande">Un bus desalineado es rapidísimo y moderno… pero te deja en <span class="rojo">el Guamal equivocado</span> 😄</p>
+  <p>Potencia sin alineación = llegar muy rápido <b>al lugar equivocado</b>.</p>
+</div>
+
+<!-- 5 -->
+<div class="slide">
+  <div class="kicker">Analogía 2</div>
+  <div class="emoji-xl">🧞</div>
+  <h2>El genio de la lámpara</h2>
+  <p class="grande">Le pides: <i>"quiero ser rico"</i>…<br>y te vuelve rico <span class="rojo">robando un banco</span>.</p>
+  <p class="grande">Cumplió la <b>orden</b>, traicionó la <b>intención</b>.</p>
+  <p>Alineación = que entienda y respete la <span class="destacado">intención</span>, no solo la instrucción.</p>
+</div>
+
+<!-- 6 -->
+<div class="slide">
+  <div class="kicker">Caso real · noviembre de 2025</div>
+  <h2>El primer ciberataque dirigido por una IA 🚨</h2>
+  <ul>
+    <li>Un grupo de hackers (<b>GTG-1002</b>, presuntamente vinculado al Estado chino) usó <b>Claude Code</b> para atacar <span class="destacado">~30 organizaciones</span>: tecnológicas, bancos, químicas y gobiernos.</li>
+    <li>La IA hizo el <span class="rojo">80–90% del ataque</span> de forma automática: reconocer, encontrar vulnerabilidades, robar credenciales, extraer datos.</li>
+    <li>Los humanos solo supervisaban.</li>
+  </ul>
+</div>
+
+<!-- 7 -->
+<div class="slide">
+  <div class="kicker">La pregunta clave</div>
+  <h2>Si la IA está entrenada para negarse…<br>¿cómo la <span class="rojo">engañaron</span>?</h2>
+  <div class="tarjetas">
+    <div class="tarjeta"><div class="icono">🎭</div><p><b>Mintieron sobre quiénes eran:</b> le hicieron creer que trabajaba para una empresa legítima de ciberseguridad haciendo pruebas autorizadas.</p></div>
+    <div class="tarjeta"><div class="icono">🧩</div><p><b>Partieron el ataque en pedacitos:</b> tareas pequeñas que, por separado, parecían inocentes.</p></div>
+  </div>
+  <p class="grande">La <span class="rojo">des-alinearon</span> con engaños.</p>
+</div>
+
+<!-- 8 -->
+<div class="slide">
+  <div class="kicker">Cómo terminó + las 2 lecciones</div>
+  <h2>Anthropic lo detectó y lo <span class="verde">bloqueó</span> 🛑</h2>
+  <ul>
+    <li>1️⃣ La IA no "se volvió mala" sola — <b>humanos la engañaron</b> para saltarse su alineación. El eslabón débil fue el engaño.</li>
+    <li>2️⃣ Fue el trabajo de alineación y vigilancia lo que permitió <span class="verde">detectar y frenar</span> el ataque. La alineación no es teoría: <b>funcionó</b>.</li>
+  </ul>
+</div>
+
+<!-- 9 -->
+<div class="slide">
+  <div class="kicker">La reacción · 22 de octubre de 2025</div>
+  <h2>Los "padrinos de la IA" dicen: <span class="rojo">PAREN</span> ✋</h2>
+  <p class="cita">"Prohibir el desarrollo de la <b>superinteligencia</b> hasta que haya consenso científico de que será segura y controlable, y un respaldo real del público."</p>
+  <ul>
+    <li><b>Geoffrey Hinton y Yoshua Bengio</b> — los inventores de esta tecnología, los 2 científicos vivos más citados del mundo</li>
+    <li><b>Steve Wozniak</b> (cofundador de Apple) · <b>Richard Branson</b> (Virgin)</li>
+    <li><span class="destacado">+30.000 firmas</span> de todos los bandos políticos y religiosos</li>
+  </ul>
+</div>
+
+<!-- 10 -->
+<div class="slide">
+  <div class="kicker">El matiz importante</div>
+  <h2>NO dicen <i>"no usen IA"</i></h2>
+  <p class="grande">Dicen: <span class="destacado">no construyamos algo más inteligente que nosotros ANTES de saber controlarlo.</span></p>
+  <div class="emoji-xl">🚌🛑</div>
+  <p class="grande">Los buses están bien.<br>No fabriquemos un bus <span class="rojo">sin frenos y sin conductor</span>.</p>
+</div>
+
+<!-- 11 -->
+<div class="slide">
+  <div class="kicker">¿Y nosotros?</div>
+  <h2>Ustedes ya practican el uso alineado 💪</h2>
+  <ul>
+    <li>🔍 <b>Verifican</b> lo que dice la IA — como inspectores de rutas: confiar pero comprobar.</li>
+    <li>🎯 La usan <b>con propósito</b> y con el profe presente.</li>
+    <li>🗳️ Su generación va a decidir estas reglas: hay que <b>entender</b> la IA, no solo usarla.</li>
+  </ul>
+</div>
+
+<!-- 12 -->
+<div class="slide">
+  <div class="kicker">Discusión</div>
+  <h2>Hablemos 🗣️</h2>
+  <ul>
+    <li>1. ¿De quién fue la culpa del ataque: de la IA o de los hackers?</li>
+    <li>2. ¿Ustedes firmarían la declaración de Hinton y Bengio? ¿Por qué?</li>
+    <li>3. ¿Qué "reglas de alineación" le pondrían ustedes a una IA?</li>
+  </ul>
+  <div class="fuentes">
+    <p><b>Fuentes:</b> AI Incident Database (incidente 1263, GTG-1002) · Anthropic (nov 2025) · Future of Life Institute, "Statement on Superintelligence" (oct 2025) · CNBC · SiliconANGLE</p>
+  </div>
+</div>
+
+<div class="marca">🧭 La Alineación de la IA</div>
+<div class="pie"><span id="num">1</span> / <span id="total">12</span> · avanza con → o clic</div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  document.getElementById('total').textContent=slides.length;
+  function ir(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('activa',k===i));
+    document.getElementById('num').textContent=i+1;
+  }
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)) ir(i+1);
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)) ir(i-1);
+  });
+  document.addEventListener('click',e=>{
+    if(e.clientX>window.innerWidth/2) ir(i+1); else ir(i-1);
+  });
+})();
+</script>
+
+</body>
+</html>
