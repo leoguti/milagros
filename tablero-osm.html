@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🛰️ Tablero OSM en vivo — Salesiano</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI', system-ui, sans-serif; background:#0f1220; color:#eef1ff; min-height:100vh; padding:20px; }
+  h1 { text-align:center; font-size:1.9em; margin-bottom:4px; }
+  .sub { text-align:center; color:#8890b8; margin-bottom:18px; font-size:0.95em; }
+  .sub b { color:#ffd166; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:14px; max-width:1200px; margin:0 auto; }
+  .card { background:#181c33; border:1px solid #2a3055; border-radius:14px; padding:14px 16px; position:relative; }
+  .card.presente { border-color:#ffd166; box-shadow:0 0 12px rgba(255,209,102,.15); }
+  .card.hoy { border-color:#5ee6a8; box-shadow:0 0 14px rgba(94,230,168,.25); }
+  .badges { position:absolute; top:10px; right:12px; display:flex; gap:6px; }
+  .badge { font-size:0.68em; font-weight:700; padding:2px 8px; border-radius:10px; letter-spacing:.5px; }
+  .badge.p { background:#3a3420; color:#ffd166; }
+  .badge.h { background:#173628; color:#5ee6a8; }
+  .badge.m { background:#2a1a35; color:#d78cff; }
+  .nombre { font-size:1.15em; font-weight:700; margin-bottom:1px; }
+  .usuario { color:#7c8cff; font-size:0.85em; margin-bottom:8px; }
+  .usuario a { color:#7c8cff; text-decoration:none; }
+  .dato { font-size:0.9em; color:#c9d0f2; margin:3px 0; line-height:1.35; }
+  .dato .lbl { color:#8890b8; }
+  .comentario { font-style:italic; color:#a7afd6; font-size:0.83em; margin-top:5px; border-left:3px solid #2a3055; padding-left:8px; max-height:3.6em; overflow:hidden; }
+  .num-hoy { font-size:1.6em; font-weight:800; color:#5ee6a8; }
+  .cargando { color:#8890b8; font-style:italic; }
+  .error { color:#ff6b81; font-size:0.85em; }
+  .footer { text-align:center; color:#4a5180; margin-top:18px; font-size:0.85em; }
+  .reloj { color:#7c8cff; }
+</style>
+</head>
+<body>
+  <h1>🛰️ Tablero OSM en vivo</h1>
+  <div class="sub">Grupo Salesiano Duitama · misión activa: <b>terremoto Colombia — proyecto HOT 63597</b> · se actualiza solo cada 60 s</div>
+  <div class="grid" id="grid"></div>
+  <div class="footer">Última actualización: <span class="reloj" id="reloj">—</span> · datos en vivo de api.openstreetmap.org</div>
+
+<script>
+const EQUIPO=[
+  // Presentes hoy primero
+  {nombre:"Stefania", user:"Stefania Alvarez", presente:true},
+  {nombre:"Brayan", user:"Esneider Castro", presente:true},
+  {nombre:"Nadia", user:"NADIA MILENA MELO MARTINEZ", presente:true},
+  // Resto del equipo
+  {nombre:"Cristian", user:"Cristian Tibaduiza"},
+  {nombre:"Ana María", user:"Ana Becerra"},
+  {nombre:"José Miguel", user:"josemiel"},
+  {nombre:"David", user:"davidlarotta"},
+  {nombre:"Santiago", user:"santiagodaza"},
+];
+
+const grid=document.getElementById('grid');
+const cards={};
+EQUIPO.forEach(e=>{
+  const d=document.createElement('div');
+  d.className='card'+(e.presente?' presente':'');
+  d.innerHTML=`<div class="badges" id="b-${cssId(e.user)}">${e.presente?'<span class="badge p">EN CLASE</span>':''}</div>
+    <div class="nombre">${e.nombre}</div>
+    <div class="usuario"><a href="https://www.openstreetmap.org/user/${encodeURIComponent(e.user)}/history" target="_blank">${e.user}</a></div>
+    <div id="c-${cssId(e.user)}" class="cargando">consultando OSM…</div>`;
+  grid.appendChild(d);
+  cards[e.user]=d;
+});
+
+function cssId(s){return s.replace(/[^a-zA-Z0-9]/g,'_');}
+function esHoy(iso){const d=new Date(iso);const h=new Date();return d.getFullYear()===h.getFullYear()&&d.getMonth()===h.getMonth()&&d.getDate()===h.getDate();}
+function fechaLinda(iso){
+  const d=new Date(iso), hoy=new Date();
+  const dias=Math.floor((hoy-d)/(1000*60*60*24));
+  const hora=d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  if(esHoy(iso)) return `HOY a las ${hora}`;
+  if(dias===0||dias===1) return `ayer a las ${hora}`;
+  if(dias<30) return `hace ${dias} días`;
+  if(dias<365) return `hace ${Math.round(dias/30)} meses`;
+  return `hace ${(dias/365).toFixed(1)} años`;
+}
+
+async function actualizarUno(e){
+  const cont=document.getElementById('c-'+cssId(e.user));
+  const badges=document.getElementById('b-'+cssId(e.user));
+  try{
+    const r=await fetch('https://api.openstreetmap.org/api/0.6/changesets.json?display_name='+encodeURIComponent(e.user));
+    if(!r.ok) throw new Error(r.status);
+    const j=await r.json();
+    const cs=j.changesets||[];
+    if(!cs.length){cont.innerHTML='<div class="dato">sin changesets</div>';return;}
+    const ult=cs[0];
+    const hoy=cs.filter(c=>esHoy(c.created_at));
+    const mision=hoy.filter(c=>((c.tags&&c.tags.comment)||'').toLowerCase().includes('hotosm-project-63597'));
+    const edicionesHoy=hoy.reduce((a,c)=>a+(c.changes_count||0),0);
+    const com=(ult.tags&&ult.tags.comment)||'sin comentario';
+    const editor=((ult.tags&&ult.tags.created_by)||'?').split('/')[0];
+    cont.className='';
+    cont.innerHTML=`
+      ${hoy.length?`<div class="dato"><span class="num-hoy">${hoy.length}</span> changeset${hoy.length>1?'s':''} HOY · ${edicionesHoy} ediciones</div>`:''}
+      <div class="dato"><span class="lbl">Última edición:</span> <b>${fechaLinda(ult.created_at)}</b> · ${editor}</div>
+      <div class="comentario">"${com}"</div>`;
+    const card=cards[e.user];
+    card.classList.toggle('hoy',hoy.length>0);
+    let bhtml=e.presente?'<span class="badge p">EN CLASE</span>':'';
+    if(mision.length) bhtml+='<span class="badge m">🇨🇴 MISIÓN×'+mision.length+'</span>';
+    else if(hoy.length) bhtml+='<span class="badge h">ACTIVO HOY</span>';
+    badges.innerHTML=bhtml;
+  }catch(err){
+    cont.innerHTML='<div class="error">no se pudo consultar ('+err.message+')</div>';
+  }
+}
+
+async function actualizarTodo(){
+  for(const e of EQUIPO){ await actualizarUno(e); await new Promise(r=>setTimeout(r,400)); }
+  document.getElementById('reloj').textContent=new Date().toLocaleTimeString('es-CO');
+}
+actualizarTodo();
+setInterval(actualizarTodo,60000);
+</script>
+</body>
+</html>
