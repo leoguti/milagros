@@ -30,6 +30,8 @@
   .error { color:#ff6b81; font-size:0.85em; }
   .footer { text-align:center; color:#4a5180; margin-top:18px; font-size:0.85em; }
   .reloj { color:#7c8cff; }
+  .chatline { margin-top:8px; padding:6px 9px; background:#10142a; border-radius:9px; font-size:0.82em; color:#ffd166; border:1px dashed #3a3f66; }
+  .chatline .cuando { color:#8890b8; font-style:normal; }
 </style>
 </head>
 <body>
@@ -41,15 +43,15 @@
 <script>
 const EQUIPO=[
   // Presentes hoy primero
-  {nombre:"Stefania", user:"Stefania Alvarez", presente:true},
-  {nombre:"Brayan", user:"Esneider Castro", presente:true},
-  {nombre:"Nadia", user:"NADIA MILENA MELO MARTINEZ", presente:true},
+  {nombre:"Stefania", user:"Stefania Alvarez", presente:true, chat:"stefania-claude-chat-2026junio10"},
+  {nombre:"Brayan", user:"Esneider Castro", presente:true, chat:"brayan-claude-chat-2026junio10"},
+  {nombre:"Nadia", user:"NADIA MILENA MELO MARTINEZ", presente:true, chat:"nadia-claude-chat-2026junio10"},
   // Resto del equipo
-  {nombre:"Cristian", user:"Cristian Tibaduiza"},
-  {nombre:"Ana María", user:"Ana Becerra"},
+  {nombre:"Cristian", user:"Cristian Tibaduiza", chat:"cristian-claude-chat-2026junio10"},
+  {nombre:"Ana María", user:"Ana Becerra", chat:"anamaria-claude-chat-2026junio10"},
   {nombre:"José Miguel", user:"josemiel"},
-  {nombre:"David", user:"davidlarotta"},
-  {nombre:"Santiago", user:"santiagodaza"},
+  {nombre:"David", user:"davidlarotta", chat:"dai-claude-chat-2026mayo21"},
+  {nombre:"Santiago", user:"santiagodaza", chat:"santiago-claude-chat-2026mayo06"},
 ];
 
 const grid=document.getElementById('grid');
@@ -60,7 +62,8 @@ EQUIPO.forEach(e=>{
   d.innerHTML=`<div class="badges" id="b-${cssId(e.user)}">${e.presente?'<span class="badge p">EN CLASE</span>':''}</div>
     <div class="nombre">${e.nombre}</div>
     <div class="usuario"><a href="https://www.openstreetmap.org/user/${encodeURIComponent(e.user)}/history" target="_blank">${e.user}</a></div>
-    <div id="c-${cssId(e.user)}" class="cargando">consultando OSM…</div>`;
+    <div id="c-${cssId(e.user)}" class="cargando">consultando OSM…</div>
+    <div id="q-${cssId(e.user)}"></div>`;
   grid.appendChild(d);
   cards[e.user]=d;
 });
@@ -109,8 +112,25 @@ async function actualizarUno(e){
   }
 }
 
+async function actualizarChat(e){
+  if(!e.chat) return;
+  const q=document.getElementById('q-'+cssId(e.user));
+  try{
+    const r=await fetch('https://ntfy.envs.net/'+e.chat+'/json?poll=1&since=6h');
+    const txt=await r.text();
+    const msgs=txt.trim().split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch(_){return null}})
+      .filter(m=>m&&m.event==='message'&&m.title!=='claude')
+      .filter(m=>!/^\[Ruta \d+\]/.test(m.message||''));
+    if(!msgs.length){q.innerHTML='';return;}
+    const u=msgs[msgs.length-1];
+    const hora=new Date(u.time*1000).toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+    const texto=(u.message||'').slice(0,140);
+    q.innerHTML='<div class="chatline">💬 <span class="cuando">'+hora+' ·</span> "'+texto.replace(/</g,'&lt;')+'"</div>';
+  }catch(_){/* silencioso */}
+}
+
 async function actualizarTodo(){
-  for(const e of EQUIPO){ await actualizarUno(e); await new Promise(r=>setTimeout(r,400)); }
+  for(const e of EQUIPO){ await actualizarUno(e); await actualizarChat(e); await new Promise(r=>setTimeout(r,400)); }
   document.getElementById('reloj').textContent=new Date().toLocaleTimeString('es-CO');
 }
 actualizarTodo();
