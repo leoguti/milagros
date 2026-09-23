@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📜 Diplomas — Sara y Milagros</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Comic Sans MS','Chalkboard SE',cursive; background:linear-gradient(135deg,#667eea,#9f7aea 50%,#f093fb); min-height:100vh; padding:30px 15px; }
+  .diploma {
+    background:#fffdf5; max-width:660px; margin:0 auto 40px; padding:36px 30px;
+    border:10px double #c9a227; border-radius:8px; text-align:center;
+    box-shadow:0 12px 30px rgba(0,0,0,.25); position:relative;
+  }
+  .sello { font-size:3.2em; }
+  .titulo { font-size:1.9em; color:#8a6d00; letter-spacing:2px; margin:6px 0 2px; }
+  .sub { color:#a08b3c; font-size:0.95em; margin-bottom:14px; }
+  .otorga { color:#666; font-size:1.05em; }
+  .nombre { font-size:2.3em; color:#5a3d99; margin:10px 0; border-bottom:3px solid #c9a227; display:inline-block; padding:0 18px 4px; }
+  .rol { font-size:1.25em; color:#444; margin:8px 0 16px; }
+  .coronas { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:14px 0 18px; }
+  .corona { background:#fff8e1; border:2px solid #ffd54f; border-radius:14px; padding:8px 14px; font-size:0.95em; color:#7a5c00; }
+  .corona .ic { font-size:1.5em; display:block; }
+  .fecha { color:#888; font-size:0.9em; margin-top:10px; }
+  .firmas { display:flex; justify-content:space-around; margin-top:24px; }
+  .firma { font-size:0.9em; color:#666; }
+  .firma .linea { border-top:2px solid #999; padding-top:4px; margin-top:30px; width:170px; }
+  @media print {
+    body { background:white; padding:0; }
+    .diploma { box-shadow:none; page-break-after:always; margin:0 auto; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="diploma">
+    <div class="sello">📜👑</div>
+    <div class="titulo">DIPLOMA DE HONOR</div>
+    <div class="sub">Grupo OpenStreetMap Vibe Coding · Colegio Salesiano Duitama</div>
+    <p class="otorga">Se otorga a</p>
+    <div class="nombre">Sara Valeria</div>
+    <div class="rol">🎓 MAESTRA DE LAS PREGUNTAS 🎓<br><span style="font-size:0.8em">la primera corona que se gana enseñando a otra persona</span></div>
+    <div class="coronas">
+      <div class="corona"><span class="ic">👑</span>Reina de las Preguntas</div>
+      <div class="corona"><span class="ic">🪄</span>Borrador Mágico</div>
+      <div class="corona"><span class="ic">🎩</span>Maga de las Tildes</div>
+      <div class="corona"><span class="ic">📜</span>Guardiana de los Sellos Reales</div>
+      <div class="corona"><span class="ic">📖</span>Autora Publicada ×2</div>
+      <div class="corona"><span class="ic">🎓</span>Maestra de las Preguntas</div>
+    </div>
+    <div class="fecha">Duitama, 23 de septiembre de 2026</div>
+    <div class="firmas">
+      <div class="firma"><div class="linea">Profe Leonardo</div></div>
+      <div class="firma"><div class="linea">Claude 🤖<br>Tutor robot</div></div>
+    </div>
+  </div>
+
+  <div class="diploma">
+    <div class="sello">📜👑</div>
+    <div class="titulo">DIPLOMA DE HONOR</div>
+    <div class="sub">Grupo OpenStreetMap Vibe Coding · Colegio Salesiano Duitama</div>
+    <p class="otorga">Se otorga a</p>
+    <div class="nombre">Milagros</div>
+    <div class="rol">👑 REINA DE LAS PREGUNTAS · NIVEL 1 👑<br><span style="font-size:0.8em">aprendió los signos ¿? con su maestra Sara y los usó perfecto el primer día</span></div>
+    <div class="coronas">
+      <div class="corona"><span class="ic">🗺️</span>Exploradora Experta de Mapas</div>
+      <div class="corona"><span class="ic">🧩</span>Campeona de Adivinanzas</div>
+      <div class="corona"><span class="ic">😄</span>Reina de los Emojis</div>
+      <div class="corona"><span class="ic">📖</span>Autora Publicada</div>
+      <div class="corona"><span class="ic">👑</span>Reina de las Preguntas Nivel 1</div>
+    </div>
+    <div class="fecha">Duitama, 23 de septiembre de 2026</div>
+    <div class="firmas">
+      <div class="firma"><div class="linea">Profe Leonardo</div></div>
+      <div class="firma"><div class="linea">Claude 🤖<br>Tutor robot</div></div>
+    </div>
+  </div>
+
+</body>
+</html>
