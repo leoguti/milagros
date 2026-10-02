@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧰 Guía de errores — Barrio Salesiano</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI', system-ui, sans-serif; background:#f4f5fa; color:#23263b; line-height:1.55; padding-bottom:60px; }
+  header { background:#1b2440; color:#fff; padding:26px 18px; text-align:center; }
+  header h1 { font-size:1.7em; }
+  header p { color:#aeb8e0; margin-top:6px; }
+  header a { color:#ffd166; }
+  .wrap { max-width:860px; margin:0 auto; padding:0 14px; }
+  .estados { background:#fff; border-radius:14px; padding:14px 18px; margin:18px auto; box-shadow:0 2px 8px rgba(20,25,60,.08); font-size:.95em; }
+  .estados b { color:#1b2440; }
+  nav.indice { background:#fff; border-radius:14px; padding:14px 18px; margin:0 auto 20px; box-shadow:0 2px 8px rgba(20,25,60,.08); }
+  nav.indice a { display:inline-block; margin:4px 8px 4px 0; color:#3b4ec7; text-decoration:none; font-weight:600; font-size:.93em; }
+  section { background:#fff; border-radius:14px; margin:0 0 20px; box-shadow:0 2px 8px rgba(20,25,60,.08); overflow:hidden; }
+  section > h2 { padding:14px 18px; color:#fff; font-size:1.15em; }
+  .familia-bus h2 { background:#7b2ff2; } .familia-dir h2 { background:#0e9f6e; }
+  .familia-edi h2 { background:#d97706; } .familia-tag h2 { background:#2563eb; }
+  .familia-nom h2 { background:#db2777; } .familia-via h2 { background:#475569; }
+  .error { padding:14px 18px; border-top:1px solid #eef0f8; }
+  .error h3 { font-size:1.02em; color:#1b2440; }
+  .error .n { display:inline-block; background:#1b2440; color:#ffd166; border-radius:10px; padding:1px 9px; font-size:.85em; margin-right:6px; }
+  .error .que { color:#555; margin:4px 0; font-size:.94em; }
+  .error .ej { background:#f6f7fc; border-left:4px solid #c8cff0; padding:6px 10px; margin:6px 0; font-size:.88em; color:#505770; font-style:italic; }
+  .error ol { margin:6px 0 4px 22px; font-size:.94em; }
+  .error ol li { margin:3px 0; }
+  .error .ni { background:#fff7e6; border-left:4px solid #ffd166; padding:6px 10px; margin-top:6px; font-size:.88em; }
+  code { background:#eef0f8; padding:1px 6px; border-radius:6px; font-size:.9em; color:#3b2f80; }
+  .footer { text-align:center; color:#8890a8; font-size:.85em; margin-top:26px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🧰 Guía de errores — Barrio Salesiano</h1>
+  <p>Misión: dejar nuestro barrio con <b style="color:#ffd166">CERO errores</b> en OpenStreetMap · 131 tareas en 31 tipos</p>
+  <p>Reto: <a href="https://maproulette.org/browse/projects/65438" target="_blank">proyecto Duitama en MapRoulette</a> · Avance en vivo: <a href="barrio-cero.html">medidor cero errores</a></p>
+</header>
+<div class="wrap">
+
+  <div class="estados">
+    <b>Los 4 botones de MapRoulette:</b> ✅ <b>¡Lo arreglé!</b> = corregiste y guardaste · 🟡 <b>No es un problema</b> = el dato está bien y Osmose se equivocó (explica por qué en un comentario) · 🔵 <b>Ya estaba arreglado</b> = alguien lo corrigió antes · 🔴 <b>Demasiado difícil</b> = no estás seguro (deja comentario y otro lo toma). <b>Nunca marques ✅ sin haber guardado un cambio real.</b>
+  </div>
+
+  <nav class="indice">
+    <b>Ir a:</b>
+    <a href="#bus">🚏 Transporte (55)</a>
+    <a href="#dir">🏠 Direcciones (27)</a>
+    <a href="#edi">🏗️ Edificios (18)</a>
+    <a href="#tag">🏷️ Etiquetas (12)</a>
+    <a href="#nom">✍️ Nombres (5)</a>
+    <a href="#via">🛣️ Vías y campo (9)</a>
+  </nav>
+
+  <section class="familia-bus" id="bus">
+    <h2>🚏 Transporte público — ¡nuestro tema! (55 tareas)</h2>
+    <div class="error">
+      <h3><span class="n">53</span>Falta etiqueta o rol en nodo (y <span class="n">2</span> en vía)</h3>
+      <p class="que">Un nodo (o vía) es miembro de una <b>relación de ruta de bus</b> pero no tiene su <b>rol</b> (stop/platform) o le faltan etiquetas de parada. Muchas son de las rutas que ustedes mismos subieron en 2025 😄 — hora de pulirlas.</p>
+      <ol>
+        <li>Abre con <b>JOSM</b> (mejor que iD para relaciones).</li>
+        <li>Selecciona el nodo → panel de relaciones → abre la relación de la ruta.</li>
+        <li>En la lista de miembros, al nodo señalado asígnale el rol: <code>platform</code> (donde espera la gente) o <code>stop</code> (punto sobre la vía).</li>
+        <li>Al nodo agrégale las etiquetas de parada si faltan: <code>public_transport=platform</code> + <code>highway=bus_stop</code> (y <code>name</code> si la parada tiene nombre).</li>
+        <li>Valida (el validador de JOSM te confirma) y sube.</li>
+      </ol>
+      <div class="ni">🟡 "No es un problema" si el nodo sí tiene rol y etiquetas correctas (verifícalo dos veces antes).</div>
+    </div>
+    <div class="error">
+      <h3><span class="n">2</span>network/ref distintos entre ruta y route_master</h3>
+      <p class="que">La relación de la ruta (ida o vuelta) tiene <code>network</code> o <code>ref</code> diferentes a los de su relación madre (route_master). Deben ser iguales.</p>
+      <p class="ej">ej. real del barrio: "network, ref are different"</p>
+      <ol>
+        <li>En JOSM abre ambas relaciones (la ruta y su master).</li>
+        <li>Compara <code>network</code>, <code>ref</code>, <code>operator</code>, <code>colour</code>.</li>
+        <li>Corrige para que coincidan (gana el valor correcto según la empresa real).</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="familia-dir" id="dir">
+    <h2>🏠 Direcciones (27 tareas)</h2>
+    <div class="error">
+      <h3><span class="n">24</span>addr:street no coincide con ninguna calle cercana</h3>
+      <p class="que">La dirección del predio dice una calle que no existe (con ese nombre exacto) alrededor. O la dirección está mal escrita, o la vía de al lado no tiene <code>name</code>.</p>
+      <p class="ej">ej. real: No street with name "carrera 10" found around · No street with name "CARRERA 9A" found around</p>
+      <ol>
+        <li>Mira la vía real al frente del predio: ¿cómo se llama en OSM?</li>
+        <li>Si la vía tiene nombre bien puesto (ej. <code>Carrera 10</code>) → corrige el <code>addr:street</code> del predio para que sea EXACTAMENTE igual (mayúsculas iniciales, sin "CARRERA" a gritos).</li>
+        <li>Si la vía NO tiene <code>name</code> → pónselo (formato: <code>Carrera 9A</code>, <code>Calle 17C</code>) y el error muere solo.</li>
+        <li>⚠️ El nombre en <code>addr:street</code> y el <code>name</code> de la vía deben quedar idénticos letra por letra.</li>
+      </ol>
+    </div>
+    <div class="error">
+      <h3><span class="n">3</span>Número de casa sin calle</h3>
+      <p class="que">El predio tiene <code>addr:housenumber</code> pero no dice de qué calle es.</p>
+      <ol>
+        <li>Identifica la vía del frente.</li>
+        <li>Agrega <code>addr:street</code> con el nombre exacto de esa vía.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="familia-edi" id="edi">
+    <h2>🏗️ Edificios (18 tareas) — la destreza del terremoto 🇨🇴</h2>
+    <div class="error">
+      <h3><span class="n">9</span>Micro-hueco entre edificios (gap)</h3>
+      <p class="que">Dos edificios vecinos quedaron con una ranura mínima entre sí. La regla colombiana: vecinos de pared compartida <b>comparten nodos</b>.</p>
+      <ol>
+        <li>JOSM: acerca mucho el zoom a la ranura.</li>
+        <li>Si en la realidad son pegados: junta los bordes — selecciona los nodos de un lado y únelos a la pared del otro (tecla <code>J</code> sobre la vía, o <code>M</code> para fusionar nodos superpuestos).</li>
+        <li>Pasa el validador de JOSM antes de subir.</li>
+      </ol>
+      <div class="ni">🟡 "No es un problema" si en la imagen se ve que SÍ hay un callejón o separación real.</div>
+    </div>
+    <div class="error">
+      <h3><span class="n">8</span>Edificios que se intersectan (5 normales + 2 grandes + 1 grupo)</h3>
+      <p class="que">Dos edificios se montan uno sobre otro — imposible en la vida real.</p>
+      <ol>
+        <li>Compara con la imagen satelital: ¿dónde termina de verdad cada edificio?</li>
+        <li>Mueve las esquinas (nodos) para que cada uno quede en su lugar; si son vecinos, pared compartida (nodos comunes).</li>
+        <li>Tecla <code>Q</code> para cuadrar ángulos al final.</li>
+      </ol>
+    </div>
+    <div class="error">
+      <h3><span class="n">3</span>Vía atravesando un edificio</h3>
+      <p class="que">Una calle o camino pasa por encima de un edificio dibujado.</p>
+      <ol>
+        <li>Mira la imagen: ¿el que está corrido es el edificio o la vía?</li>
+        <li>Mueve el que esté mal alineado (selecciona y arrastra) hasta que ya no se crucen.</li>
+      </ol>
+      <div class="ni">🟡 Ojo: un garaje o pasaje techado puede ser legítimo — ahí va <code>covered=yes</code> en la vía o <code>building=roof</code>.</div>
+    </div>
+    <div class="error">
+      <h3><span class="n">1</span>Edificio demasiado pequeño</h3>
+      <p class="que">Un "edificio" de tamaño imposible (un garabato de un par de metros).</p>
+      <ol>
+        <li>Si en la imagen hay una construcción real pequeña (caseta, kiosco): redibújala al tamaño real.</li>
+        <li>Si no hay nada: bórralo.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="familia-tag" id="tag">
+    <h2>🏷️ Etiquetas (12 tareas)</h2>
+    <div class="error">
+      <h3><span class="n">3</span>Objeto incompleto (solo tiene surface)</h3>
+      <p class="que">Un área dice de qué material es (<code>surface</code>) pero no QUÉ es.</p>
+      <ol>
+        <li>Mira la imagen y el contexto: ¿es cancha (<code>leisure=pitch</code> + <code>sport=*</code>), patio, parqueadero (<code>amenity=parking</code>), plazoleta?</li>
+        <li>Agrega la etiqueta principal que diga qué es.</li>
+      </ol>
+    </div>
+    <div class="error">
+      <h3><span class="n">3</span>Objeto con nombre pero sin tipo (2 puntos + 1 área)</h3>
+      <p class="que">Tiene <code>name</code> pero ninguna etiqueta que diga qué es (¿tienda? ¿iglesia? ¿parque?).</p>
+      <ol>
+        <li>Si conoces el lugar (¡es el barrio!): ponle su etiqueta (<code>shop=*</code>, <code>amenity=*</code>, <code>leisure=*</code>...).</li>
+        <li>Si nadie lo conoce: Demasiado difícil + comentario, y lo verificamos en campo.</li>
+      </ol>
+    </div>
+    <div class="error">
+      <h3><span class="n">2</span>Etiqueta obsoleta: crossing=zebra</h3>
+      <p class="que">La forma vieja de marcar cebras. Cambio mecánico:</p>
+      <ol>
+        <li>Quita <code>crossing=zebra</code>.</li>
+        <li>Pon <code>crossing=uncontrolled</code> + <code>crossing:markings=zebra</code>.</li>
+      </ol>
+    </div>
+    <div class="error">
+      <h3><span class="n">4</span>Casos únicos de etiquetas (uno cada uno)</h3>
+      <ol>
+        <li><b>Conflicto</b> <code>crossing=informal</code> + <code>highway=crossing</code>: deja solo uno — si es cruce informal de la gente, quita <code>highway=crossing</code>.</li>
+        <li><b>Valor malo</b> <code>backrest=Banco</code>: la banca lleva <code>backrest=yes</code> (o <code>no</code> si no tiene espaldar).</li>
+        <li><b>Obsoleto</b> <code>amenity=nursing_home</code> → <code>amenity=social_facility</code> + <code>social_facility=nursing_home</code>.</li>
+        <li><b>Parqueadero sin detalle</b>: a <code>amenity=parking</code> agrégale <code>parking=surface</code> (si es a nivel, lo usual aquí).</li>
+      </ol>
+    </div>
+    <div class="error">
+      <h3><span class="n">1</span>Acceso demasiado permisivo</h3>
+      <p class="que"><code>access=yes</code> en una vía permite TODO (hasta caballos y materiales peligrosos 🐴☢️).</p>
+      <ol><li>Reemplaza por lo específico que aplique (ej. <code>motor_vehicle=yes</code>, <code>foot=yes</code>) o elimina la etiqueta si la vía es normal.</li></ol>
+    </div>
+  </section>
+
+  <section class="familia-nom" id="nom">
+    <h2>✍️ Nombres (5 tareas) — ¡ya son expertos en esto!</h2>
+    <div class="error">
+      <h3><span class="n">2</span>Nombre EN MAYÚSCULAS</h3>
+      <p class="ej">ej. reales: <code>VIVE & BAILA studio ZUMBA Fitness</code> · <code>CANINOS</code></p>
+      <ol>
+        <li>Mayúscula solo al inicio de cada palabra importante: <code>Vive & Baila Studio Zumba Fitness</code> · <code>Caninos</code>.</li>
+        <li>Tildes de paso.</li>
+      </ol>
+      <div class="ni">🟡 Si es sigla o la marca se escribe así de verdad (mira el letrero): No es un problema.</div>
+    </div>
+    <div class="error">
+      <h3><span class="n">1</span>Inicial pegada al nombre</h3>
+      <p class="ej">ej. real: <code>Galeria N.Melo</code></p>
+      <ol><li>Espacio tras la inicial y tilde: <code>Galería N. Melo</code>.</li></ol>
+    </div>
+    <div class="error">
+      <h3><span class="n">2</span>Nombre local vs nombre por defecto</h3>
+      <p class="que">El objeto tiene <code>name:es</code> pero no <code>name</code>, o los dos no coinciden.</p>
+      <ol><li>Asegura que exista <code>name</code> con el nombre real, y que <code>name:es</code> (si está) diga lo mismo.</li></ol>
+    </div>
+  </section>
+
+  <section class="familia-via" id="via">
+    <h2>🛣️ Vías y trabajo de campo (9 tareas) — ¡pueden ir a MIRAR! 🚶</h2>
+    <div class="error">
+      <h3><span class="n">2</span>Reductor de velocidad sin mapear</h3>
+      <p class="que">Alguien reportó un policía acostado que no está en el mapa (observado en 2017 y 2022 — ¡puede que ya ni exista!).</p>
+      <ol>
+        <li>Es EL BARRIO: salgan a verificar en el descanso 😄.</li>
+        <li>Si existe: nodo sobre la vía con <code>traffic_calming=bump</code> (o <code>hump</code> si es ancho).</li>
+        <li>Si ya no existe: No es un problema + comentario "verificado en campo, ya no está".</li>
+      </ol>
+    </div>
+    <div class="error">
+      <h3><span class="n">2</span>Límite de velocidad sin mapear (10 y 30 km/h)</h3>
+      <ol>
+        <li>Si hay señal real de velocidad en esa cuadra: <code>maxspeed=30</code> (o 10) en la vía.</li>
+        <li>Sin señal visible: No es un problema + comentario.</li>
+      </ol>
+    </div>
+    <div class="error">
+      <h3><span class="n">5</span>Casos únicos de vías y áreas</h3>
+      <ol>
+        <li><b>Barrera bloqueando vía</b>: ¿hay portón/bolardo real? etiquétalo bien (<code>barrier=gate</code> + <code>access=*</code>); si no existe, bórralo.</li>
+        <li><b>Negocio muy cerca de la vía</b>: arrastra el punto del negocio ADENTRO de su edificio.</li>
+        <li><b>POI duplicado</b> (un centro comercial 2 veces a 90 m): fusiona los dos puntos en uno (en JOSM: seleccionar ambos y combinar, conservando las mejores etiquetas).</li>
+        <li><b>Landuse diminuto</b> (zona verde de 186 m²): si es real, quizá es <code>leisure=garden</code>; si es basurita de dibujo, eliminar.</li>
+        <li><b>Nombre/etiqueta rara restante</b>: lee el detalle en Osmose y pregunta a Claude si hay duda.</li>
+      </ol>
+    </div>
+  </section>
+
+  <p class="footer">¿Tu error no aparece o no sabes qué hacer? Pregúntale a Claude en tu chat de siempre 🤖 · Grupo OSM Vibe Coding · Colegio Salesiano Duitama · oct 2026</p>
+</div>
+</body>
+</html>
