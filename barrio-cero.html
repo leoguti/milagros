@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 Barrio Salesiano: Cero Errores</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI', system-ui, sans-serif; background:#0f1220; color:#eef1ff; min-height:100vh; padding:24px 14px; text-align:center; }
+  h1 { font-size:1.6em; margin-bottom:2px; }
+  .sub { color:#8890b8; margin-bottom:22px; font-size:.95em; }
+  .sub a { color:#7c8cff; }
+  .grannum { font-size:7em; font-weight:800; line-height:1; margin:10px 0 4px; color:#ff6b81; transition: color .5s; }
+  .grannum.bajando { color:#ffd166; }
+  .grannum.cerca { color:#5ee6a8; }
+  .grannum.cero { color:#5ee6a8; }
+  .lbl { color:#aeb8e0; font-size:1.1em; margin-bottom:18px; }
+  .fiesta { font-size:2em; display:none; }
+  .barra { max-width:560px; height:22px; background:#181c33; border-radius:12px; margin:0 auto 8px; overflow:hidden; border:1px solid #2a3055; }
+  .barra > div { height:100%; background:linear-gradient(90deg,#5ee6a8,#38ef7d); width:0%; transition: width 1s; }
+  .mr { color:#8890b8; font-size:.95em; margin-bottom:22px; }
+  .mr b { color:#5ee6a8; }
+  .tipos { max-width:560px; margin:0 auto; text-align:left; background:#181c33; border-radius:14px; padding:14px 18px; border:1px solid #2a3055; }
+  .tipos h3 { color:#ffd166; font-size:.95em; margin-bottom:8px; }
+  .tipo { display:flex; justify-content:space-between; font-size:.88em; padding:3px 0; color:#c9d0f2; border-bottom:1px dashed #23273f; }
+  .tipo:last-child { border-bottom:none; }
+  .tipo .n { color:#ff6b81; font-weight:700; }
+  .reloj { color:#4a5180; font-size:.85em; margin-top:16px; }
+</style>
+</head>
+<body>
+  <h1>🎯 Barrio Salesiano: misión CERO ERRORES</h1>
+  <p class="sub">Dato en vivo de Osmose (la fuente de la verdad) · <a href="https://maproulette.org/browse/challenges/57092" target="_blank">ir al reto</a> · <a href="guia-errores-barrio.html">guía de errores</a></p>
+
+  <div class="grannum" id="num">…</div>
+  <div class="lbl">errores restantes en el barrio</div>
+  <div class="fiesta" id="fiesta">🎉🏆 ¡BARRIO IMPECABLE! ¡LO LOGRARON! 🏆🎉</div>
+
+  <div class="barra"><div id="bar"></div></div>
+  <div class="mr" id="mr">cargando MapRoulette…</div>
+
+  <div class="tipos">
+    <h3>Qué falta, por tipo</h3>
+    <div id="tipos">cargando…</div>
+  </div>
+
+  <div class="reloj">Inicio de la misión: 131 errores (2-oct-2026) · actualiza cada 3 min · última: <span id="reloj">—</span></div>
+
+<script>
+const INICIO=131;
+const BBOX="-73.0372645,5.8294423,-73.0311678,5.8354216";
+let POLY=null;
+
+async function poligono(){
+  if(POLY) return POLY;
+  const r=await fetch("https://nominatim.openstreetmap.org/search?q=Barrio%20Salesiano%2C%20Duitama%2C%20Colombia&format=json&polygon_geojson=1&limit=1");
+  const j=await r.json();
+  POLY=j[0].geojson.coordinates[0];
+  return POLY;
+}
+function dentro(lon,lat,poly){
+  let d=false, j=poly.length-1;
+  for(let i=0;i<poly.length;i++){
+    const [xi,yi]=poly[i], [xj,yj]=poly[j];
+    if(((yi>lat)!=(yj>lat)) && (lon < (xj-xi)*(lat-yi)/(yj-yi)+xi)) d=!d;
+    j=i;
+  }
+  return d;
+}
+
+async function actualizar(){
+  try{
+    const poly=await poligono();
+    const r=await fetch(`https://osmose.openstreetmap.fr/api/0.3/issues?bbox=${BBOX}&limit=500`);
+    const j=await r.json();
+    const dentroBarrio=(j.issues||[]).filter(i=>dentro(i.lon,i.lat,poly));
+    const n=dentroBarrio.length;
+    const el=document.getElementById('num');
+    el.textContent=n;
+    el.className='grannum'+(n===0?' cero':(n<=20?' cerca':(n<INICIO?' bajando':'')));
+    document.getElementById('fiesta').style.display = n===0 ? 'block' : 'none';
+    const pct=Math.max(0,Math.min(100,(INICIO-n)/INICIO*100));
+    document.getElementById('bar').style.width=pct.toFixed(1)+'%';
+
+    // tipos: necesitamos títulos → los sacamos con una segunda consulta con full
+    const tipos={};
+    for(const i of dentroBarrio){ tipos[i.item]=(tipos[i.item]||0)+1; }
+    // nombres amigables por item
+    const NOMBRES={ "1140":"Nodos en relaciones de calle","2060":"Direcciones","0":"Edificios (geometría)","9001":"Etiqueta principal faltante","1070":"Vía/objeto vs edificio","5010":"Nombres (mayúsculas/espacios)","4010":"Etiquetas obsoletas","9002":"Etiquetado obsoleto","1230":"Duplicados","8300":"Campo: reductores/velocidad","1260":"Rutas: network/ref","5060":"Nombre local vs defecto","4030":"Conflicto de etiquetas","2130":"Barrera en vía","3200":"Área sin etiqueta","3161":"Parking sin detalle","3100":"Landuse diminuto","3040":"Valor de etiqueta malo","3030":"Etiqueta a migrar","3220":"Acceso demasiado amplio","2110":"Objeto con nombre sin tipo" };
+    const cont=document.getElementById('tipos');
+    const orden=Object.entries(tipos).sort((a,b)=>b[1]-a[1]);
+    cont.innerHTML = orden.length ? orden.map(([it,c])=>`<div class="tipo"><span>${NOMBRES[it]||('item '+it)}</span><span class="n">${c}</span></div>`).join('') : '<div class="tipo"><span>¡Nada! 🎉</span></div>';
+  }catch(e){
+    document.getElementById('num').textContent='⚠️';
+  }
+  // progreso MapRoulette
+  try{
+    const r=await fetch("https://maproulette.org/api/v2/challenge/57092/tasks?limit=200");
+    const t=await r.json();
+    const res=t.filter(x=>x.status!==0).length;
+    document.getElementById('mr').innerHTML=`MapRoulette: <b>${res}</b> de ${t.length} tareas del reto resueltas`;
+  }catch(e){ document.getElementById('mr').textContent='MapRoulette: sin datos'; }
+  document.getElementById('reloj').textContent=new Date().toLocaleTimeString('es-CO');
+}
+actualizar();
+setInterval(actualizar, 180000);
+</script>
+</body>
+</html>
