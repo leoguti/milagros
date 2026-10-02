@@ -58,16 +58,15 @@
   <section class="familia-bus" id="bus">
     <h2>🚏 Transporte público — ¡nuestro tema! (55 tareas)</h2>
     <div class="error">
-      <h3><span class="n">53</span>Falta etiqueta o rol en nodo (y <span class="n">2</span> en vía)</h3>
-      <p class="que">Un nodo (o vía) es miembro de una <b>relación de ruta de bus</b> pero no tiene su <b>rol</b> (stop/platform) o le faltan etiquetas de parada. Muchas son de las rutas que ustedes mismos subieron en 2025 😄 — hora de pulirlas.</p>
+      <h3><span class="n">53</span>Nodos colados en las relaciones "calle 18" y "Calle 17A" ⭐ CASO VERIFICADO</h3>
+      <p class="que">Las 53 tareas de "falta etiqueta o rol en nodo" apuntan a solo <b>2 relaciones de calle</b> (type=route + route=road: «calle 18» y «Calle 17A») que quedaron rellenas de nodos sueltos sin etiquetas ni rol — basura de un mapeo antiguo. <b>No hay que arreglar nodo por nodo:</b></p>
       <ol>
-        <li>Abre con <b>JOSM</b> (mejor que iD para relaciones).</li>
-        <li>Selecciona el nodo → panel de relaciones → abre la relación de la ruta.</li>
-        <li>En la lista de miembros, al nodo señalado asígnale el rol: <code>platform</code> (donde espera la gente) o <code>stop</code> (punto sobre la vía).</li>
-        <li>Al nodo agrégale las etiquetas de parada si faltan: <code>public_transport=platform</code> + <code>highway=bus_stop</code> (y <code>name</code> si la parada tiene nombre).</li>
-        <li>Valida (el validador de JOSM te confirma) y sube.</li>
+        <li><b>UNA persona con JOSM</b> abre la relación (seleccionar un nodo señalado → panel de relaciones → doble clic en la relación).</li>
+        <li>En el editor de relaciones: <b>quitar TODOS los miembros que sean nodos sin rol y sin etiquetas</b> (los nodos no se borran del mapa — solo dejan de ser miembros).</li>
+        <li>Repetir con la otra relación. Subir. ¡53 tareas resueltas con 2 ediciones!</li>
+        <li>Los demás: cuando MapRoulette les entregue una de estas tareas ya limpiada, marcar <b>"Ya estaba arreglado"</b>.</li>
       </ol>
-      <div class="ni">🟡 "No es un problema" si el nodo sí tiene rol y etiquetas correctas (verifícalo dos veces antes).</div>
+      <div class="ni">🟡 Encargado sugerido: quien esté más duro en JOSM. Las <b>2</b> tareas de "falta rol en vía" se revisan aparte (mirar qué relación y qué vía).</div>
     </div>
     <div class="error">
       <h3><span class="n">2</span>network/ref distintos entre ruta y route_master</h3>
