@@ -39,6 +39,7 @@ const CATEGORIAS=[
   {id:"silencioso", t:"🤫 Trabajador(a) Silencioso(a)"},
   {id:"pregunton", t:"❓ Preguntón/Preguntona Oficial"},
   {id:"revelacion", t:"🚀 Revelación del Año"},
+  {id:"ia", t:"🤖 Mejor Mapeador(a) con IA"},
 ];
 async function cargar(){
   const r=await fetch(`https://ntfy.envs.net/${TOPIC}/json?poll=1&since=all`);
