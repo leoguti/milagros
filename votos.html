@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏆 La Gala del Mapa — Votaciones</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI', system-ui, sans-serif; background:#0d0a1a; color:#f5edd8; min-height:100vh; padding:24px 14px; }
+  .wrap { max-width:640px; margin:0 auto; }
+  h1 { text-align:center; font-size:1.8em; color:#ffd166; text-shadow:0 2px 8px rgba(255,209,102,.3); }
+  .sub { text-align:center; color:#a898c8; margin:6px 0 24px; }
+  .panel { background:#171230; border:1px solid #39305e; border-radius:16px; padding:20px; margin-bottom:18px; }
+  .btn { display:block; width:100%; background:linear-gradient(90deg,#ffd166,#f0a500); color:#1a1430; border:none; border-radius:12px; padding:14px; font-size:1.1em; font-weight:800; cursor:pointer; }
+  .btn:disabled { opacity:.5; cursor:default; }
+  .quien { text-align:center; font-size:1.05em; margin-bottom:4px; }
+  .quien b { color:#ffd166; }
+  .cat { margin-bottom:20px; }
+  .cat h3 { color:#ffd166; font-size:1.05em; margin-bottom:8px; }
+  .cands { display:flex; flex-wrap:wrap; gap:8px; }
+  .cand { background:#241c45; border:2px solid #39305e; border-radius:20px; padding:7px 14px; cursor:pointer; font-size:.95em; user-select:none; }
+  .cand.sel { background:#ffd166; color:#1a1430; border-color:#ffd166; font-weight:700; }
+  .nota { color:#8878a8; font-size:.85em; text-align:center; margin-top:10px; }
+  .ok { text-align:center; font-size:1.3em; color:#5ee6a8; padding:30px 0; }
+  .error { color:#ff6b81; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏆 La Gala del Mapa</h1>
+  <p class="sub">Premios del grupo OSM Vibe Coding · un voto por cuenta OSM · resultados en sobre cerrado hasta el asado 🍖🎬</p>
+
+  <div class="panel" id="panel-login">
+    <p style="text-align:center;margin-bottom:14px">Para votar, entra con tu cuenta de OpenStreetMap:</p>
+    <button class="btn" onclick="login()">🗝️ Entrar con OpenStreetMap</button>
+    <p class="nota">Solo leemos tu nombre de usuario — nada más.</p>
+  </div>
+
+  <div class="panel" id="panel-voto" style="display:none">
+    <p class="quien">Votando como: <b id="usuario">…</b></p>
+    <p class="nota" style="margin-bottom:14px">Toca UN nombre por categoría. Puedes cambiar tu voto: vale el último que envíes.</p>
+    <div id="categorias"></div>
+    <button class="btn" id="btn-enviar" onclick="enviar()">📨 Enviar mis votos</button>
+    <p class="nota" id="estado"></p>
+  </div>
+
+  <div class="panel ok" id="panel-ok" style="display:none">
+    ✅ ¡Votos recibidos y guardados en el sobre! 🗳️✨<br>
+    <span style="font-size:.7em;color:#a898c8">Los resultados se revelan en la gala del asado 🍖🎬</span>
+  </div>
+</div>
+
+<script>
+const CLIENT_ID="QC-UqGs8zMnO5dXuPucO26YuZqDPtaP8v7opc9DkjKo";
+const REDIRECT="https://leoguti.github.io/milagros/votos.html";
+const TOPIC="salesiano-gala-votos-k3x9";
+
+const CANDIDATOS=["Brayan","Peña","Nadia","Cristian","Ana María","Yosef","Stefania","Edward","Milagros","Santiago","David","Sara"];
+const CATEGORIAS=[
+  {id:"mapeador", t:"🗺️ Mapeador(a) del Año", d:"quien más mapa hace"},
+  {id:"tarde", t:"⏰ La Llegada Triunfal", d:"quien más llega tarde"},
+  {id:"alegre", t:"😄 Alegría del Grupo", d:"quien más alegra la clase"},
+  {id:"inspector", t:"🔍 Ojo de Inspector", d:"quien encuentra todos los errores"},
+  {id:"silencioso", t:"🤫 Trabajador(a) Silencioso(a)", d:"trabaja sin decir ni mu"},
+  {id:"pregunton", t:"❓ Preguntón/Preguntona Oficial", d:"quien más pregunta"},
+  {id:"revelacion", t:"🚀 Revelación del Año", d:"quien más mejoró"},
+  {id:"claude", t:"🤖 Mejor Amigo(a) de Claude", d:"quien más chatea con el robot"},
+];
+
+let usuario=null, seleccion={};
+
+function b64url(bytes){return btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+async function login(){
+  const verifier=b64url(crypto.getRandomValues(new Uint8Array(32)));
+  sessionStorage.setItem('verif',verifier);
+  const challenge=b64url(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)));
+  location.href=`https://www.openstreetmap.org/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT)}&response_type=code&scope=read_prefs&code_challenge=${challenge}&code_challenge_method=S256`;
+}
+async function canjear(code){
+  const body=new URLSearchParams({grant_type:'authorization_code',code,redirect_uri:REDIRECT,client_id:CLIENT_ID,code_verifier:sessionStorage.getItem('verif')});
+  const r=await fetch('https://www.openstreetmap.org/oauth2/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
+  const j=await r.json();
+  if(!j.access_token) throw new Error('sin token');
+  const u=await fetch('https://api.openstreetmap.org/api/0.6/user/details.json',{headers:{Authorization:'Bearer '+j.access_token}});
+  const uj=await u.json();
+  return uj.user.display_name;
+}
+function pintar(){
+  document.getElementById('usuario').textContent=usuario;
+  const cont=document.getElementById('categorias');
+  cont.innerHTML=CATEGORIAS.map(c=>`
+    <div class="cat"><h3>${c.t} <span style="color:#8878a8;font-weight:400;font-size:.85em">(${c.d})</span></h3>
+      <div class="cands">${CANDIDATOS.map(n=>`<span class="cand" data-cat="${c.id}" data-n="${n}" onclick="elegir(this)">${n}</span>`).join('')}</div>
+    </div>`).join('');
+  document.getElementById('panel-login').style.display='none';
+  document.getElementById('panel-voto').style.display='block';
+}
+function elegir(el){
+  const cat=el.dataset.cat;
+  document.querySelectorAll(`.cand[data-cat="${cat}"]`).forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
+  seleccion[cat]=el.dataset.n;
+}
+async function enviar(){
+  const faltan=CATEGORIAS.filter(c=>!seleccion[c.id]);
+  if(faltan.length){document.getElementById('estado').textContent='Te falta votar en: '+faltan.map(c=>c.t).join(', ');return;}
+  document.getElementById('btn-enviar').disabled=true;
+  const voto={user:usuario, votos:seleccion, t:Date.now()};
+  const r=await fetch('https://ntfy.envs.net/'+TOPIC,{method:'POST',headers:{'Title':'voto'},body:JSON.stringify(voto)});
+  if(r.ok){document.getElementById('panel-voto').style.display='none';document.getElementById('panel-ok').style.display='block';}
+  else{document.getElementById('estado').textContent='Error al enviar — intenta de nuevo';document.getElementById('btn-enviar').disabled=false;}
+}
+(async function(){
+  const code=new URLSearchParams(location.search).get('code');
+  if(code){
+    history.replaceState({},'',REDIRECT);
+    try{ usuario=await canjear(code); pintar(); }
+    catch(e){ document.getElementById('panel-login').innerHTML='<p class="error">Falló el login — recarga e intenta de nuevo</p><button class="btn" onclick="login()">Reintentar</button>'; }
+  }
+})();
+</script>
+</body>
+</html>

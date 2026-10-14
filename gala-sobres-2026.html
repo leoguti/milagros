@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎬 La Gala del Mapa — Los Sobres</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI', system-ui, sans-serif; background:#0d0a1a; color:#f5edd8; min-height:100vh; padding:30px 14px; text-align:center; }
+  h1 { font-size:2.2em; color:#ffd166; text-shadow:0 2px 12px rgba(255,209,102,.4); }
+  .sub { color:#a898c8; margin:8px 0 30px; }
+  .sobres { max-width:760px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:16px; }
+  .sobre { background:#171230; border:2px solid #39305e; border-radius:16px; padding:22px 16px; cursor:pointer; transition:transform .2s; }
+  .sobre:hover { transform:scale(1.02); border-color:#ffd166; }
+  .sobre h3 { color:#ffd166; font-size:1.1em; margin-bottom:10px; }
+  .cerrado { font-size:3em; }
+  .ganador { display:none; }
+  .sobre.abierto .cerrado { display:none; }
+  .sobre.abierto .ganador { display:block; animation:pop .6s; }
+  @keyframes pop { 0%{transform:scale(0)} 70%{transform:scale(1.2)} 100%{transform:scale(1)} }
+  .nombre { font-size:1.7em; font-weight:800; color:#5ee6a8; margin:6px 0; }
+  .detalle { font-size:.8em; color:#8878a8; }
+  .stats { color:#8878a8; font-size:.9em; margin-top:26px; }
+</style>
+</head>
+<body>
+  <h1>🎬 La Gala del Mapa</h1>
+  <p class="sub">Toca cada sobre para revelar el ganador... 🥁 (<span id="nvotantes">…</span> votantes)</p>
+  <div class="sobres" id="sobres"></div>
+  <p class="stats" id="stats"></p>
+
+<script>
+const TOPIC="salesiano-gala-votos-k3x9";
+const CATEGORIAS=[
+  {id:"mapeador", t:"🗺️ Mapeador(a) del Año"},
+  {id:"tarde", t:"⏰ La Llegada Triunfal"},
+  {id:"alegre", t:"😄 Alegría del Grupo"},
+  {id:"inspector", t:"🔍 Ojo de Inspector"},
+  {id:"silencioso", t:"🤫 Trabajador(a) Silencioso(a)"},
+  {id:"pregunton", t:"❓ Preguntón/Preguntona Oficial"},
+  {id:"revelacion", t:"🚀 Revelación del Año"},
+  {id:"claude", t:"🤖 Mejor Amigo(a) de Claude"},
+];
+async function cargar(){
+  const r=await fetch(`https://ntfy.envs.net/${TOPIC}/json?poll=1&since=all`);
+  const txt=await r.text();
+  const ultimo={};
+  for(const line of txt.trim().split('\n')){
+    try{
+      const m=JSON.parse(line);
+      if(m.event!=='message') continue;
+      const v=JSON.parse(m.message);
+      if(v.user && v.votos) ultimo[v.user]=v;
+    }catch(e){}
+  }
+  const votantes=Object.values(ultimo);
+  document.getElementById('nvotantes').textContent=votantes.length;
+  const cont=document.getElementById('sobres');
+  cont.innerHTML=CATEGORIAS.map(c=>{
+    const conteo={};
+    for(const v of votantes){ const n=v.votos[c.id]; if(n) conteo[n]=(conteo[n]||0)+1; }
+    const orden=Object.entries(conteo).sort((a,b)=>b[1]-a[1]);
+    const max=orden.length?orden[0][1]:0;
+    const ganadores=orden.filter(x=>x[1]===max).map(x=>x[0]);
+    const gan=orden.length?ganadores.join(' 🤝 '):'(sin votos)';
+    const det=orden.map(([n,c2])=>`${n}: ${c2}`).join(' · ');
+    return `<div class="sobre" onclick="this.classList.add('abierto')">
+      <h3>${c.t}</h3>
+      <div class="cerrado">✉️</div>
+      <div class="ganador"><div style="font-size:2em">🏆</div><div class="nombre">${gan}</div><div class="detalle">${det}</div></div>
+    </div>`;
+  }).join('');
+}
+cargar();
+</script>
+</body>
+</html>
