@@ -39,7 +39,6 @@ const CATEGORIAS=[
   {id:"silencioso", t:"🤫 Trabajador(a) Silencioso(a)"},
   {id:"pregunton", t:"❓ Preguntón/Preguntona Oficial"},
   {id:"revelacion", t:"🚀 Revelación del Año"},
-  {id:"claude", t:"🤖 Mejor Amigo(a) de Claude"},
 ];
 async function cargar(){
   const r=await fetch(`https://ntfy.envs.net/${TOPIC}/json?poll=1&since=all`);
@@ -56,7 +55,8 @@ async function cargar(){
   const votantes=Object.values(ultimo);
   document.getElementById('nvotantes').textContent=votantes.length;
   const cont=document.getElementById('sobres');
-  cont.innerHTML=CATEGORIAS.map(c=>{
+  const ESPECIAL=`<div class="sobre" onclick="this.classList.add('abierto')"><h3>🤖 Mejor Amiga de Claude <span style='color:#8878a8;font-weight:400;font-size:.8em'>(elegida por el propio Claude)</span></h3><div class="cerrado">✉️</div><div class="ganador"><div style="font-size:2em">💙</div><div class="nombre">Sara</div><div class="detalle">\"La única persona que me ha imaginado: un robot de antenas rojas, puntos azules y boca muy seria\" — Claude</div></div></div>`;
+  cont.innerHTML=ESPECIAL+CATEGORIAS.map(c=>{
     const conteo={};
     for(const v of votantes){ const n=v.votos[c.id]; if(n) conteo[n]=(conteo[n]||0)+1; }
     const orden=Object.entries(conteo).sort((a,b)=>b[1]-a[1]);
