@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Juego del mouse</title>
+<style>
+:root{--cielo:#E9F6FF;--tinta:#1F2A44;--sol:#FFD34E;--rosa:#FF7EB6;--verde:#3CCB8B}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--cielo);color:var(--tinta);font-family:Verdana,sans-serif;overflow:hidden;user-select:none}
+header{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;background:#fff;box-shadow:0 2px 10px #0001;z-index:5}
+header b{font-size:22px}
+#puntos{font-size:22px;font-weight:bold}
+#msg{position:fixed;top:78px;left:0;right:0;text-align:center;font-size:30px;font-weight:bold;padding:10px 16px;z-index:4}
+#zona{position:fixed;inset:150px 0 0 0}
+.estrella{position:absolute;font-size:90px;cursor:pointer;transition:transform .15s;line-height:1}
+.estrella:hover{transform:scale(1.15)}
+.fruta{position:absolute;font-size:80px;cursor:grab;line-height:1;touch-action:none}
+.fruta:active{cursor:grabbing}
+#canasta{position:absolute;right:8%;bottom:10%;font-size:130px;padding:20px;border:6px dashed var(--verde);border-radius:30px;background:#fff8}
+#globo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(var(--s,1));font-size:80px;transition:transform .12s}
+#barra{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);width:60%;height:28px;background:#fff;border-radius:14px;overflow:hidden;border:3px solid var(--tinta)}
+#barra i{display:block;height:100%;width:0;background:var(--verde);transition:width .2s}
+.boton{display:inline-block;margin-top:24px;padding:22px 44px;font-size:30px;font-weight:bold;background:var(--rosa);color:#fff;border:none;border-radius:20px;cursor:pointer}
+.centro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:34px;padding:16px}
+.confeti{position:fixed;font-size:40px;pointer-events:none;animation:caer 1.4s ease-out forwards;z-index:9}
+@keyframes caer{from{opacity:1;transform:translateY(0) rotate(0)}to{opacity:0;transform:translateY(220px) rotate(200deg)}}
+</style>
+</head>
+<body>
+<header><b>🦋 Juego del mouse</b><span id="puntos">⭐ 0</span></header>
+<div id="msg"></div>
+<div id="zona"></div>
+<script>
+const zona=document.getElementById('zona'),msg=document.getElementById('msg'),pts=document.getElementById('puntos');
+let puntos=0;
+const sumar=n=>{puntos+=n;pts.textContent='⭐ '+puntos};
+const azar=(a,b)=>a+Math.random()*(b-a);
+function fiesta(x,y){for(let i=0;i<8;i++){const c=document.createElement('div');c.className='confeti';c.textContent=['🎉','✨','⭐','💖'][i%4];c.style.left=(x+azar(-60,60))+'px';c.style.top=(y+azar(-40,10))+'px';document.body.appendChild(c);setTimeout(()=>c.remove(),1400)}}
+function pantalla(html,boton,siguiente){zona.innerHTML='';msg.textContent='';const d=document.createElement('div');d.className='centro';d.innerHTML=html;if(boton){const b=document.createElement('button');b.className='boton';b.textContent=boton;b.onclick=siguiente;d.appendChild(b)}zona.appendChild(d)}
+
+function inicio(){pantalla('<div style="font-size:90px">🖱️</div><div>¡Hola! Vamos a practicar con el mouse.</div><div style="font-size:24px;margin-top:10px">Mueve la flechita hasta el botón rosado y haz <b>un clic</b>.</div>','¡Empezar!',nivel1)}
+
+function nivel1(){
+  zona.innerHTML='';let faltan=6,tam=110;
+  msg.textContent='Nivel 1: haz clic en la estrella ⭐ ('+faltan+')';
+  const poner=()=>{
+    zona.innerHTML='';const e=document.createElement('div');e.className='estrella';e.textContent='⭐';e.style.fontSize=tam+'px';
+    const w=zona.clientWidth,h=zona.clientHeight;e.style.left=azar(40,Math.max(60,w-tam-40))+'px';e.style.top=azar(20,Math.max(40,h-tam-40))+'px';
+    e.onclick=ev=>{sumar(1);fiesta(ev.clientX,ev.clientY);faltan--;tam=Math.max(70,tam-8);
+      if(faltan>0){msg.textContent='¡Muy bien! Otra estrella ⭐ ('+faltan+')';poner()}
+      else pantalla('<div style="font-size:90px">🏆</div><div>¡Lo lograste! Ya sabes hacer clic.</div>','Siguiente nivel',nivel2)};
+    zona.appendChild(e)};
+  poner();
+}
+
+function nivel2(){
+  zona.innerHTML='';const frutas=['🍎','🍌','🍓'];let faltan=frutas.length;
+  msg.textContent='Nivel 2: arrastra cada fruta a la canasta 🧺';
+  const can=document.createElement('div');can.id='canasta';can.textContent='🧺';zona.appendChild(can);
+  frutas.forEach((f,i)=>{
+    const e=document.createElement('div');e.className='fruta';e.textContent=f;e.style.left=(8+i*14)+'%';e.style.top=(20+i*18)+'%';zona.appendChild(e);
+    let dx=0,dy=0,mov=false;
+    e.addEventListener('pointerdown',ev=>{mov=true;e.setPointerCapture(ev.pointerId);const r=e.getBoundingClientRect();dx=ev.clientX-r.left;dy=ev.clientY-r.top;e.style.transform='scale(1.15)'});
+    e.addEventListener('pointermove',ev=>{if(!mov)return;const z=zona.getBoundingClientRect();e.style.left=(ev.clientX-z.left-dx)+'px';e.style.top=(ev.clientY-z.top-dy)+'px'});
+    e.addEventListener('pointerup',ev=>{mov=false;e.style.transform='';
+      const a=e.getBoundingClientRect(),c=can.getBoundingClientRect(),cx=a.left+a.width/2,cy=a.top+a.height/2;
+      if(cx>c.left&&cx<c.right&&cy>c.top&&cy<c.bottom){e.remove();sumar(2);fiesta(ev.clientX,ev.clientY);faltan--;
+        if(faltan>0)msg.textContent='¡Bien! Faltan '+faltan+' frutas';
+        else pantalla('<div style="font-size:90px">🧺</div><div>¡Canasta llena! Ya sabes arrastrar.</div><div style="font-size:24px;margin-top:10px">Arrastrar es: apretar el botón, mover y soltar.</div>','Siguiente nivel',nivel3)}
+      else msg.textContent='Casi… suéltala encima de la canasta 🧺'});
+  });
+}
+
+function nivel3(){
+  zona.innerHTML='';let s=.5;const meta=2.2;
+  msg.textContent='Nivel 3: gira la ruedita del mouse para inflar el globo 🎈';
+  const g=document.createElement('div');g.id='globo';g.textContent='🎈';g.style.setProperty('--s',s);zona.appendChild(g);
+  const b=document.createElement('div');b.id='barra';b.innerHTML='<i></i>';zona.appendChild(b);
+  const llenar=()=>{b.firstChild.style.width=Math.min(100,(s-.5)/(meta-.5)*100)+'%'};
+  zona.onwheel=ev=>{ev.preventDefault();s=Math.max(.5,Math.min(meta,s+(ev.deltaY<0?.12:-.06)));g.style.setProperty('--s',s);llenar();
+    if(s>=meta){zona.onwheel=null;sumar(5);fiesta(innerWidth/2,innerHeight/2);
+      pantalla('<div style="font-size:90px">🎈</div><div>¡Globo inflado! Esa ruedita sirve para acercar el mapa.</div>','Final',final)}};
+}
+
+function final(){pantalla('<div style="font-size:100px">🌟</div><div>¡Eres una campeona del mouse!</div><div style="font-size:28px;margin-top:12px">Ganaste <b>'+puntos+'</b> estrellas.</div><div style="font-size:24px;margin-top:12px">Cuéntale a Claude en tu chat cuántas estrellas ganaste.</div>','Jugar otra vez',()=>{puntos=0;sumar(0);inicio()})}
+
+inicio();
+</script>
+</body>
+</html>
